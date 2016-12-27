@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_edit"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.littletemplate.corpapel.EditActivity"
+    android:background="@drawable/background">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_light">
+
+        <Button
+            android:text="GUARDAR CAMBIOS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button2"
+
+            android:layout_weight="1"
+            android:background="@android:color/holo_orange_light"
+            android:textColor="@android:color/background_light" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:paddingTop="15dp"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        android:paddingBottom="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            app:srcCompat="@drawable/corpapel_logo"
+            android:id="@+id/imageView"
+            android:layout_marginBottom ="10dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="19dp"
+            app:srcCompat="@drawable/corpapel_nombre"
+            android:layout_marginBottom ="5dp"
+            android:id="@+id/imageView2" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            app:srcCompat="@drawable/corpapel_subtitulo"
+            android:layout_marginBottom ="10dp"
+            android:id="@+id/imageView3" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            app:srcCompat="@drawable/corpapel_informacionsolicitada"
+
+            android:id="@+id/imageView4" />
+
+        <EditText
+            android:layout_weight="0.1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+
+            android:ems="10"
+            android:id="@+id/editText"
+            android:textSize="12sp"
+            android:textColor="?attr/colorBackgroundFloating"
+            android:textColorLink="?attr/colorControlHighlight"
+            android:textColorHighlight="@android:color/background_light"
+            android:textColorHint="@android:color/background_light"
+            android:textCursorDrawable="@android:color/background_light"
+            android:hint="NOMBRES APELLIDOS"
+            android:gravity="bottom|center_vertical|center" />
+
+        <EditText
+            android:layout_weight="0.1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText2"
+            android:textSize="12sp"
+            android:textColor="?attr/colorBackgroundFloating"
+            android:textColorLink="?attr/colorControlHighlight"
+            android:textColorHighlight="@android:color/background_light"
+            android:textColorHint="@android:color/background_light"
+            android:textCursorDrawable="@android:color/background_light"
+            android:hint="NOMBRE DE LA EMPRESA"
+            android:gravity="bottom|center_vertical|center" />
+
+        <EditText
+            android:layout_weight="0.1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText3"
+            android:textSize="12sp"
+            android:textColor="?attr/colorBackgroundFloating"
+            android:textColorLink="?attr/colorControlHighlight"
+            android:textColorHighlight="@android:color/background_light"
+            android:textColorHint="@android:color/background_light"
+            android:textCursorDrawable="@android:color/background_light"
+            android:hint="DIRECCION"
+            android:gravity="bottom|center_vertical|center" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_departamento"
+            android:layout_weight="0.1"
+
+            />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_provincia"
+            android:layout_weight="0.1"
+            />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_distrito"
+            android:layout_weight="0.1"
+            />
+
+
+
+        <EditText
+            android:layout_weight="0.1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:ems="10"
+            android:id="@+id/editText5"
+            android:textSize="12sp"
+            android:textColor="?attr/colorBackgroundFloating"
+            android:textColorLink="?attr/colorControlHighlight"
+            android:textColorHighlight="@android:color/background_light"
+            android:textColorHint="@android:color/background_light"
+            android:textCursorDrawable="@android:color/background_light"
+            android:hint="TELEFONO MOVIL"
+            android:gravity="bottom|center_vertical|center" />
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

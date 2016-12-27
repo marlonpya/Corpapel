@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="EDITAR PERFIL" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_search_black_24dp"
+            android:title="BUSCAR TIENDAS" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_phone_in_talk_black_24dp"
+            android:title="CONTACTO" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_cancel_black_24dp"
+            android:title="CERRAR" />
+    </group>
+
+</menu>

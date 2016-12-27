@@ -1,0 +1,279 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.littletemplate.corpapel.TiendaFragment">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:background="@drawable/background"
+        >
+
+        <ImageView
+
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            app:srcCompat="@drawable/corpapel_textbar"
+            android:id="@+id/imageView10"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <Button
+        android:layout_marginLeft="20dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/corpapel_logo"
+        android:id="@+id/buttonburger" />
+
+    <LinearLayout
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingTop="40dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:weightSum="1"
+        >
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4"/>
+
+        <LinearLayout
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:weightSum="1"
+            android:background="@android:color/background_light">
+
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                app:srcCompat="@drawable/ic_menu_gallery"
+
+                />
+
+            <LinearLayout
+                android:paddingLeft="20dp"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:paddingTop="5dp"
+                    android:text="JOCKEY PLAZA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_nombre"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:paddingTop="5dp"
+                    android:text="Avenida Javier Prado Este 4200 (Centro Comercial Jockey Plaza - tienda 264) - Santiago de Surco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_direccion"
+                    android:textSize="8sp" />
+                <TextView
+                    android:paddingTop="5dp"
+                    android:text="HORARIO DE ATENCIÓN : 9:00 AM a 7:00 PM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView5"
+                    android:textSize="8sp"
+                    android:textColor="@color/colorPrimary" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:paddingLeft="0dp"
+                android:orientation="vertical"
+                android:layout_weight="0.2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right">
+
+                <TextView
+                    android:paddingTop="5dp"
+                    android:text="3.68 km"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView4"
+                    android:textStyle="normal|bold"
+                    android:textSize="12sp"
+                    android:gravity="right"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+
+
+        <LinearLayout
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:weightSum="1"
+
+            android:background="@android:color/background_light">
+
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                app:srcCompat="@drawable/ic_menu_gallery"
+
+                />
+
+            <LinearLayout
+                android:paddingLeft="20dp"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
+                android:id="@+id/presslayout"
+                android:clickable="true"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:paddingTop="5dp"
+                    android:text="VER CATALOGO DE PRODUCTOS"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    />
+                <TextView
+                    android:paddingTop="5dp"
+                    android:text="Miren nuestros últimos productos en stock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="8sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:paddingLeft="0dp"
+                android:orientation="vertical"
+                android:layout_weight="0.2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+        <LinearLayout
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:weightSum="1"
+            android:background="@android:color/background_light">
+
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                app:srcCompat="@drawable/ic_menu_gallery"
+
+                />
+
+            <LinearLayout
+                android:paddingLeft="20dp"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="0.7"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:paddingTop="5dp"
+                    android:text="COMPARTIR EN REDES SOCIALES"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    />
+                <TextView
+                    android:paddingTop="5dp"
+                    android:text="Comparte con tus amigos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="8sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:paddingLeft="0dp"
+                android:orientation="vertical"
+                android:layout_weight="0.2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:gravity="bottom">
+
+        <Button
+            android:text="Tienda 0215 - CORPAPEL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+            android:layout_weight="1"
+            android:background="@android:color/holo_orange_light"
+            android:textColor="@android:color/background_light" />
+
+    </RelativeLayout>
+
+
+</FrameLayout>

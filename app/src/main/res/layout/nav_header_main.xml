@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/holo_orange_light"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="0dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="0dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="0dp"
+        android:layout_width="99dp"
+        android:layout_height="99dp"
+        android:id="@+id/imageView9"
+
+        android:background="@drawable/fotoperfil" />
+
+    <TextView
+        android:text="Sofia Marquez Villar"
+        android:layout_width="214dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/textView"
+        android:gravity="center"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp" />
+
+</LinearLayout>
