@@ -41,7 +41,7 @@
             android:paddingBottom="50dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:paddingTop="15dp">
+            android:paddingTop="45dp">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -71,10 +71,10 @@
                 app:srcCompat="@drawable/corpapel_informacionsolicitada" />
 
             <EditText
-                android:id="@+id/etNombresRegistro"
+                android:id="@+id/etNombresEditar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.07"
+                android:layout_weight="0.06"
                 android:ems="10"
                 android:gravity="bottom|center_vertical|center"
                 android:hint="NOMBRES APELLIDOS"
@@ -87,10 +87,10 @@
                 android:textSize="12sp" />
 
             <EditText
-                android:id="@+id/etPasswordRegistro"
+                android:id="@+id/etPasswordEditar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.07"
+                android:layout_weight="0.06"
                 android:ems="10"
                 android:gravity="bottom|center_vertical|center"
                 android:hint="PASSWORD"
@@ -103,10 +103,10 @@
                 android:textSize="12sp" />
 
             <EditText
-                android:id="@+id/etNombresEmpresaRegistro"
+                android:id="@+id/etNombresEmpresaEditar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.07"
+                android:layout_weight="0.06"
                 android:ems="10"
                 android:gravity="bottom|center_vertical|center"
                 android:hint="NOMBRE DE LA EMPRESA"
@@ -119,10 +119,10 @@
                 android:textSize="12sp" />
 
             <EditText
-                android:id="@+id/etDireccionRegistro"
+                android:id="@+id/etDireccionEditar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.07"
+                android:layout_weight="0.06"
                 android:ems="10"
                 android:gravity="bottom|center_vertical|center"
                 android:hint="DIRECCION"
@@ -135,28 +135,28 @@
                 android:textSize="12sp" />
 
             <Spinner
-                android:id="@+id/spinner_departamento_registro"
+                android:id="@+id/spinner_departamento_Editar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.07" />
+                android:layout_weight="0.06" />
 
             <Spinner
-                android:id="@+id/spinner_provincia_registro"
+                android:id="@+id/spinner_provincia_Editar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.07" />
+                android:layout_weight="0.06" />
 
             <Spinner
-                android:id="@+id/spinner_distrito_registro"
+                android:id="@+id/spinner_distrito_Editar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.07" />
+                android:layout_weight="0.06" />
 
-            <EditText
-                android:id="@+id/etCorreoRegistro"
+            <TextView
+                android:id="@+id/etCorreoEditar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.07"
+                android:layout_weight="0.06"
                 android:ems="10"
                 android:gravity="bottom|center_vertical|center"
                 android:hint="CORREO ELECTRÓNICO"
@@ -169,10 +169,10 @@
                 android:textSize="12sp" />
 
             <EditText
-                android:id="@+id/etTelefonoRegistro"
+                android:id="@+id/etTelefonoEditar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.07"
+                android:layout_weight="0.06"
                 android:ems="10"
                 android:gravity="bottom|center_vertical|center"
                 android:hint="TELEFONO MOVIL"

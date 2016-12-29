@@ -119,12 +119,12 @@ public class TiendaFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
-            case R.id.buttonburger:
+            /*case R.id.buttonburger:
                 ((MainActivity) getActivity()).OpenDrawer();
                 break;
             case R.id.presslayout:
                 ((MainActivity) getActivity()).SetFragmentProductos();
-                break;
+                break;*/
 
         }
     }

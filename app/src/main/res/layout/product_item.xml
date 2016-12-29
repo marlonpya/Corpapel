@@ -1,5 +1,5 @@
-<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,44 +8,45 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-
             android:id="@+id/producto_imagen"
+            android:layout_width="100dp"
+
+            android:layout_height="100dp"
             card_view:srcCompat="@drawable/rollo" />
+
         <TextView
-            android:paddingTop="10dp"
             android:id="@+id/producto_titulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Titulo"
             android:gravity="center"
-            android:textSize="10sp"
-            android:textColor="@android:color/black" />
+            android:paddingTop="10dp"
+            android:text="Titulo"
+            android:textColor="@android:color/black"
+            android:textSize="10sp" />
+
         <TextView
             android:id="@+id/producto_codigo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CODIGO"
             android:gravity="center"
-            android:textSize="10sp"
-            />
+            android:text="CODIGO"
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/producto_precio"
-            android:paddingTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="S/ 000.00"
             android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="S/ 000.00"
+            android:textColor="#65AF1A"
             android:textSize="15sp"
-            android:textStyle="normal|bold"
-            android:textColor="#65AF1A" />
+            android:textStyle="normal|bold" />
 
     </LinearLayout>
 

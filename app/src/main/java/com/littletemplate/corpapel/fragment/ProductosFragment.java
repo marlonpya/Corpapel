@@ -11,16 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.littletemplate.corpapel.MainActivity;
 import com.littletemplate.corpapel.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Clases.Producto;
-import Clases.RVAdapter;
+import com.littletemplate.corpapel.Clases.Producto;
+import com.littletemplate.corpapel.Clases.RVAdapter;
 
-public class ProductosFragment extends Fragment implements View.OnClickListener {
+public class ProductosFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -90,7 +89,7 @@ public class ProductosFragment extends Fragment implements View.OnClickListener 
 
         buttonBurger = (Button) rootView.findViewById(R.id.buttonburger);
 
-        buttonBurger.setOnClickListener(this);
+        //buttonBurger.setOnClickListener(this);
 
         thiscontext = container.getContext();
 
@@ -133,18 +132,6 @@ public class ProductosFragment extends Fragment implements View.OnClickListener 
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.buttonburger:
-                ((MainActivity) getActivity()).OpenDrawer();
-                break;
-            case R.id.presslayout:
-                ((MainActivity) getActivity()).SetFragmentProductos();
-                break;
-        }
     }
 
     /**

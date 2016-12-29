@@ -1,4 +1,4 @@
-package Clases;
+package com.littletemplate.corpapel.Clases;
 
 import android.content.Context;
 import android.os.StrictMode;

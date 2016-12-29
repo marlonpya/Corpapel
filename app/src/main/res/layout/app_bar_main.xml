@@ -7,9 +7,6 @@
     android:fitsSystemWindows="true"
     tools:context="com.littletemplate.corpapel.MainActivity">
 
-
     <include layout="@layout/content_main" />
-
-
 
 </android.support.design.widget.CoordinatorLayout>

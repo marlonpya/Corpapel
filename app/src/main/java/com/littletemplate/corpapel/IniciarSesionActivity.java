@@ -1,10 +1,24 @@
 package com.littletemplate.corpapel;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.StringRequest;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -18,21 +32,37 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.littletemplate.corpapel.apis.FacebookApi;
 import com.littletemplate.corpapel.app.BaseActivity;
+import com.littletemplate.corpapel.app.Configuracion;
+import com.littletemplate.corpapel.util.ConexionBroadcastReceiver;
+import com.littletemplate.corpapel.util.Constante;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.Signature;
 import java.util.Arrays;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class LoginActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class IniciarSesionActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
+    public static final String TAG = IniciarSesionActivity.class.getSimpleName();
+    @BindView(R.id.activity_login) RelativeLayout layout;
+    @BindView(R.id.etNombreIngresar) EditText etNombre;
+    @BindView(R.id.etPasswordIngresar) EditText etPassword;
+
     private CallbackManager callbackManager;
     private GoogleApiClient mGoogleApiClient;
     private boolean isMainLobbyStarted = false;
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         if (FacebookApi.conectado())
             startActivity(new Intent(this, MainActivity.class)
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -52,13 +82,60 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         findViewById(R.id.sign_in_button).setOnClickListener(this);*/
 
         //DBConnection.GetTiendas(this);
+        iniciarProgresDialog();
     }
 
-    @OnClick(R.id.buttonlogin)
-    public void iniciarSesion() { startActivity(new Intent(this, MainActivity.class)); }
+    private void iniciarProgresDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.enviando_peticion));
+        progressDialog.setCancelable(false);
+    }
+
+    @OnClick(R.id.btnIniciarSesion)
+    public void iniciarSesion() {
+        if (validarIniciarSesion()) {
+            if (ConexionBroadcastReceiver.isConect()) {
+                requestIniciarSesion();
+            } else {
+                ConexionBroadcastReceiver.showSnack(layout, this);
+            }
+        } else {
+            Toast.makeText(this, R.string.ingresar_todos_datos, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void requestIniciarSesion() {
+        progressDialog.show();
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                Constante.URL_INICIAR_SESION,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            progressDialog.hide();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            progressDialog.hide();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        VolleyLog.e(error.toString());
+                        progressDialog.hide();
+                    }
+                }
+        );
+        Configuracion.getInstancia().addRequestQueue(request, TAG);
+    }
 
     @OnClick(R.id.buttonregistro)
-    public void iARegistro() { startActivity(new Intent(this, RegisterActivity.class)); }
+    public void iARegistro() { startActivity(new Intent(this, RegistroActivity.class)); }
 
     @OnClick(R.id.login_button)
     public void iniciarSesionFACEBOOK() {
@@ -70,7 +147,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
             @Override
             public void onSuccess(LoginResult loginResult) {
                 isMainLobbyStarted=false;
-                Intent mainLobby = new Intent(LoginActivity.this, MainActivity.class);
+                Intent mainLobby = new Intent(IniciarSesionActivity.this, MainActivity.class);
                 if(!isMainLobbyStarted) {
                     startActivity(mainLobby);
                     isMainLobbyStarted = true;
@@ -107,7 +184,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             isMainLobbyStarted=false;
-            Intent mainLobby = new Intent(LoginActivity.this, MainActivity.class);
+            Intent mainLobby = new Intent(IniciarSesionActivity.this, MainActivity.class);
             if(!isMainLobbyStarted) {
                 startActivity(mainLobby);
                 isMainLobbyStarted = true;
@@ -128,4 +205,9 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
         return super.onKeyDown(keyCode, event);
     }
 
+
+    private boolean validarIniciarSesion() {
+        return !TextUtils.isEmpty(etNombre.getText().toString().trim()) ||
+                !TextUtils.isEmpty(etPassword.getText().toString().trim());
+    }
 }

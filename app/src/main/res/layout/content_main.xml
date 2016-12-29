@@ -2,48 +2,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Contenedor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="0dp"
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    android:id="@+id/Contenedor"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.littletemplate.corpapel.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.littletemplate.corpapel.MapsActivity" />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:gravity="center"
-        android:background="@drawable/background"
-        >
-
-        <ImageView
-
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            app:srcCompat="@drawable/corpapel_textbar"
-            android:id="@+id/imageView10"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <Button
-        android:layout_marginLeft="20dp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/corpapel_logo"
-        android:id="@+id/buttonburger" />
 
 </RelativeLayout>

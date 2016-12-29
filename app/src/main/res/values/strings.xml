@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Corpapel</string>
-    <string name="facebook_app_id">1780970028840545</string>
+    <string name="facebook_app_id">1780148508901827</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -8,11 +8,16 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_maps">Map</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="enviando_peticion">Enviando petición..</string>
     <string name="internet_error">Lo sentimos, usted no tiene conexión a internet.</string>
     <string name="ingresar_todos_datos">Se requiere de todos los datos</string>
+    <string name="buscar_tienda">Buscar Tienda</string>
+    <string name="x_ubicacion_gps">Por Ubicación (GPS)</string>
+    <string name="x_tipo">Por Tipo de Servicio</string>
+    <string name="registro_ok">Usuario registrado satisfactoriamente</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="registro_error">Ocurrió un error al momento de registrar usuario</string>
 
     <string-array name="DEPARTAMENTO_array">
         <item>DEPARTAMENTO</item>
@@ -203,7 +208,6 @@
         <item>VILLA EL SALVADOR</item>
         <item>VILLA MARIA DEL TRIUNFO</item>
     </string-array>
-
 
     <string-array name="OYON_array">
         <item>DISTRITO</item>

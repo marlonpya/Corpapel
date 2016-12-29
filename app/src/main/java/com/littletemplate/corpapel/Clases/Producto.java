@@ -1,4 +1,4 @@
-package Clases;
+package com.littletemplate.corpapel.Clases;
 
 /**
  * Created by Administrador on 10/11/2016.

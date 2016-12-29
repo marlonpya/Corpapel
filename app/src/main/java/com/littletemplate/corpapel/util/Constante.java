@@ -6,5 +6,6 @@ package com.littletemplate.corpapel.util;
 
 public class Constante {
 
-    public static final String URL_REGISTRAR_USUARIO = "";
+    public static final String URL_REGISTRAR_USUARIO    = "http://uc-web.mobi/CorpapelPHP/registrarUsuario";
+    public static final String URL_INICIAR_SESION       = "http://uc-web.mobi/CorpapelPHP/iniciarSesion";
 }

@@ -6,14 +6,24 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.littletemplate.corpapel.R;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class EditarFragment extends Fragment {
+    @BindView(R.id.etNombresEditar) EditText etNombre;
+    @BindView(R.id.etPasswordEditar) EditText etPassword;
+    @BindView(R.id.etNombresEmpresaEditar) EditText etNombreEmpresa;
+    @BindView(R.id.etDireccionEditar) EditText etDireccion;
+    @BindView(R.id.spinner_departamento_Editar) Spinner spDepartamento;
+    @BindView(R.id.spinner_provincia_Editar) Spinner spProvincia;
+    @BindView(R.id.spinner_distrito_Editar) Spinner spDistrito;
+    @BindView(R.id.etTelefonoEditar) EditText etTelefono;
 
     public EditarFragment() { }
 

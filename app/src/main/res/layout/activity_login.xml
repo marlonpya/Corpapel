@@ -10,13 +10,12 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="com.littletemplate.corpapel.LoginActivity">
+    tools:context="com.littletemplate.corpapel.IniciarSesionActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-
         android:layout_gravity="bottom"
         android:background="@android:color/background_light"
         android:orientation="horizontal">
@@ -33,7 +32,7 @@
             android:textColor="@android:color/background_light" />
 
         <Button
-            android:id="@+id/buttonlogin"
+            android:id="@+id/btnIniciarSesion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -105,19 +104,18 @@
                 app:srcCompat="@drawable/user_icon" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/etNombreIngresar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-
                 android:layout_weight="0.07"
                 android:ems="10"
                 android:gravity="center_vertical|fill_vertical"
                 android:hint="NOMBRE DE USUARIO"
                 android:inputType="textPersonName"
-                android:textColor="?attr/colorBackgroundFloating"
+                android:textColor="@android:color/white"
                 android:textColorHighlight="@android:color/background_light"
                 android:textColorHint="@android:color/background_light"
-                android:textColorLink="?attr/colorControlHighlight"
+                android:textColorLink="@android:color/white"
                 android:textCursorDrawable="@android:color/background_light"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -133,7 +131,6 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="25dp"
-
                 android:layout_weight="0.01" />
 
             <ImageView
@@ -141,11 +138,10 @@
                 android:layout_width="0dp"
                 android:layout_height="25dp"
                 android:layout_weight="0.02"
-
                 app:srcCompat="@drawable/pass_icon" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/etPasswordIngresar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.07"
@@ -153,10 +149,10 @@
                 android:gravity="center_vertical|fill_vertical"
                 android:hint="PASSWORD"
                 android:inputType="textPassword"
-                android:textColor="?attr/colorBackgroundFloating"
+                android:textColor="@android:color/white"
                 android:textColorHighlight="@android:color/background_light"
                 android:textColorHint="@android:color/background_light"
-                android:textColorLink="?attr/colorControlHighlight"
+                android:textColorLink="@android:color/white"
                 android:textCursorDrawable="@android:color/background_light"
                 android:textSize="12sp" />
         </LinearLayout>

@@ -1,12 +1,20 @@
 package com.littletemplate.corpapel.app;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.util.Base64;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -54,5 +62,22 @@ public class Configuracion extends Application {
     public <T> void addRequestQueue(Request<T> request) {
         request.setTag(TAG);
         getRequestQueue().add(request);
+    }
+
+    public static void printKeyHash(Context context) {
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(
+                    context.getPackageName(), PackageManager.GET_SIGNATURES);
+            for (android.content.pm.Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.i("KeyHash:",
+                        Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("jk", "Exception(NameNotFoundException) : " + e);
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("mkm", "Exception(NoSuchAlgorithmException) : " + e);
+        }
     }
 }
