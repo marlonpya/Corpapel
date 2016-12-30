@@ -1,5 +1,6 @@
 package com.littletemplate.corpapel.model;
 
+import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -10,6 +11,7 @@ import io.realm.annotations.Required;
 
 public class Tienda extends RealmObject {
     public static final String TAG = Tienda.class.getSimpleName();
+    public static final String ID = "id";
 
     @PrimaryKey
     private long id;
@@ -19,6 +21,17 @@ public class Tienda extends RealmObject {
     private String horario;
     private double longitud;
     private double latitud;
+
+    public static int getUltimoId() {
+        Realm realm = Realm.getDefaultInstance();
+        Number number = realm.where(Tienda.class).max(ID);
+        return number == null ? 0 : number.intValue() + 1;
+    }
+
+    public static void insertTienda(Tienda tienda) {
+        Realm realm = Realm.getDefaultInstance();
+
+    }
 
     public long getId() {
         return id;

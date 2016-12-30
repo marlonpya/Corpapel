@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.littletemplate.corpapel.R;
+import com.littletemplate.corpapel.model.Usuario;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +34,16 @@ public class EditarFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_editar, container, false);
         ButterKnife.bind(this, view);
 
+        if (Usuario.getUsuario() != null) {
+            Usuario usuario = Usuario.getUsuario();
+            etNombre.setText(usuario.getNombres());
+            etNombreEmpresa.setText(usuario.getNombre_empresa());
+            etDireccion.setText(usuario.getDireccion());
+            spDepartamento.setPrompt(usuario.getDepartamento());
+            spProvincia.setPrompt(usuario.getProvincia());
+            spDistrito.setPrompt(usuario.getDistrito());
+            etTelefono.setText(usuario.getMovil());
+        }
         return view;
     }
 

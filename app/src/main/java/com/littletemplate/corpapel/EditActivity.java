@@ -2,7 +2,6 @@ package com.littletemplate.corpapel;
 
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,7 +22,7 @@ public class EditActivity extends BaseActivity implements AdapterView.OnItemSele
 
         yourButton.setOnClickListener(new View.OnClickListener() {
                                           public void onClick(View v) {
-                                              startActivity(new Intent(EditActivity.this, MainActivity.class));
+                                              startActivity(new Intent(EditActivity.this, PrincipalActivity.class));
                                           }
                                       }
         );

@@ -104,14 +104,14 @@
                 app:srcCompat="@drawable/user_icon" />
 
             <EditText
-                android:id="@+id/etNombreIngresar"
+                android:id="@+id/etCorreoIngresar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.07"
                 android:ems="10"
                 android:gravity="center_vertical|fill_vertical"
-                android:hint="NOMBRE DE USUARIO"
-                android:inputType="textPersonName"
+                android:hint="CORREO DE USUARIO"
+                android:inputType="textEmailAddress"
                 android:textColor="@android:color/white"
                 android:textColorHighlight="@android:color/background_light"
                 android:textColorHint="@android:color/background_light"
@@ -159,7 +159,7 @@
 
 
         <com.facebook.login.widget.LoginButton
-            android:id="@+id/login_button"
+            android:id="@+id/btnIngresarFB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

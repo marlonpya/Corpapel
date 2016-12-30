@@ -101,7 +101,7 @@ public class BusquedaFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-       //((MainActivity)getActivity()).SetFragmentTienda();
+       //((PrincipalActivity)getActivity()).SetFragmentTienda();
     }
 
     /**

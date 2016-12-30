@@ -1,11 +1,13 @@
 package com.littletemplate.corpapel;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -18,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
+import com.littletemplate.corpapel.apis.FacebookApi;
 import com.littletemplate.corpapel.app.BaseActivity;
 import com.littletemplate.corpapel.app.Configuracion;
 import com.littletemplate.corpapel.util.ConexionBroadcastReceiver;
@@ -66,6 +69,11 @@ public class RegistroActivity extends BaseActivity {
                 this, R.array.DISTRITO_array, R.layout.spinner_item);
         adapterDISTRITO.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spDistrito.setAdapter(adapterDISTRITO);
+
+        if (getIntent().hasExtra(Constante.S_REGISTRO_CORREO) && getIntent().hasExtra(Constante.S_REGISTRO_NOMBRE)) {
+            etCorreo.setText(getIntent().getStringExtra(Constante.S_REGISTRO_CORREO));
+            etNombres.setText(getIntent().getStringExtra(Constante.S_REGISTRO_NOMBRE));
+        }
     }
 
     private void iniciarProgresDialog() {
@@ -98,15 +106,10 @@ public class RegistroActivity extends BaseActivity {
                         Log.d(TAG, response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.getBoolean("status")) {
-                                Toast.makeText(RegistroActivity.this, R.string.registro_ok, Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(RegistroActivity.this, IniciarSesionActivity.class)
-                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                            } else {
-                                Toast.makeText(RegistroActivity.this, R.string.registro_error, Toast.LENGTH_SHORT).show();
-                            }
+                            int codigo = jsonObject.getInt("codigo");
                             Log.d(TAG, jsonObject.toString());
                             progressDialog.hide();
+                            mensajeSistema(codigo);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e(TAG, e.toString(), e);
@@ -117,6 +120,7 @@ public class RegistroActivity extends BaseActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
                         VolleyLog.e(error.toString());
                         progressDialog.hide();
                     }
@@ -140,6 +144,30 @@ public class RegistroActivity extends BaseActivity {
         Configuracion.getInstancia().addRequestQueue(request, TAG);
     }
 
+    private void mensajeSistema(int codigo) {
+        String texto = "No se recibieron los datos necesarios";
+        switch (codigo) {
+            case -3 : texto = "El correo ingresado se encuentra en uso"; break;
+            case -4 : texto = "Ocurrió un error al momento de registrar usuario"; break;
+            case 200 : texto = "Usuario registrado satisfactoriamente"; break;
+        }
+        DialogInterface.OnClickListener click = null;
+        if (codigo == 200) click = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                startActivity(new Intent(RegistroActivity.this, IniciarSesionActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            }
+        };
+        new AlertDialog.Builder(RegistroActivity.this)
+                .setTitle(R.string.app_name)
+                .setMessage(texto)
+                .setCancelable(false)
+                .setPositiveButton(R.string.aceptar, click)
+                .show();
+    }
+
     private boolean validarDatos() {
         return  (!TextUtils.isEmpty(etNombres.getText().toString().trim()) &&
                 !TextUtils.isEmpty(etPassword.getText().toString().trim()) &&
@@ -149,9 +177,15 @@ public class RegistroActivity extends BaseActivity {
                 !TextUtils.isEmpty(spProvincia.getSelectedItem().toString().trim()) &&
                 !TextUtils.isEmpty(spDistrito.getSelectedItem().toString().trim()) &&
                 !TextUtils.isEmpty(etCorreo.getText().toString().trim()) &&
-                !TextUtils.isEmpty(etTelefono.getText().toString().trim())) ||
+                !TextUtils.isEmpty(etTelefono.getText().toString().trim())) /*||
                 spDepartamento.getSelectedItem().toString().trim().equals("DEPARTAMENTO") ||
                 spProvincia.getSelectedItem().toString().trim().equals("PROVINCIA") ||
-                spDistrito.getSelectedItem().toString().trim().equals("DISTRITO");
+                spDistrito.getSelectedItem().toString().trim().equals("DISTRITO")*/;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (FacebookApi.conectado()) FacebookApi.cerrarSesion();
     }
 }

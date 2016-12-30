@@ -120,10 +120,10 @@ public class TiendaFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch(v.getId()) {
             /*case R.id.buttonburger:
-                ((MainActivity) getActivity()).OpenDrawer();
+                ((PrincipalActivity) getActivity()).OpenDrawer();
                 break;
             case R.id.presslayout:
-                ((MainActivity) getActivity()).SetFragmentProductos();
+                ((PrincipalActivity) getActivity()).SetFragmentProductos();
                 break;*/
 
         }

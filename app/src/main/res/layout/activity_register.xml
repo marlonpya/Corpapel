@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context="com.littletemplate.corpapel.RegistroActivity">
+    tools:context=".RegistroActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,164 +26,157 @@
 
     </LinearLayout>
 
-    <ScrollView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="50dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="15dp">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingBottom="50dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:paddingTop="15dp">
+            android:layout_height="61dp"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/corpapel_logo" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="61dp"
-                android:layout_marginBottom="10dp"
-                app:srcCompat="@drawable/corpapel_logo" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="19dp"
+            android:layout_marginBottom="5dp"
+            app:srcCompat="@drawable/corpapel_nombre" />
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="match_parent"
-                android:layout_height="19dp"
-                android:layout_marginBottom="5dp"
-                app:srcCompat="@drawable/corpapel_nombre" />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/corpapel_subtitulo" />
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="match_parent"
-                android:layout_height="7dp"
-                android:layout_marginBottom="10dp"
-                app:srcCompat="@drawable/corpapel_subtitulo" />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            app:srcCompat="@drawable/corpapel_informacionsolicitada" />
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                app:srcCompat="@drawable/corpapel_informacionsolicitada" />
+        <EditText
+            android:id="@+id/etNombresRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07"
+            android:ems="10"
+            android:gravity="bottom|center_vertical|center"
+            android:hint="NOMBRES APELLIDOS"
+            android:inputType="textPersonName"
+            android:textColor="?attr/colorBackgroundFloating"
+            android:textColorHighlight="@android:color/background_light"
+            android:textColorHint="@android:color/background_light"
+            android:textColorLink="?attr/colorControlHighlight"
+            android:textCursorDrawable="@android:color/background_light"
+            android:textSize="12sp" />
 
-            <EditText
-                android:id="@+id/etNombresRegistro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.07"
-                android:ems="10"
-                android:gravity="bottom|center_vertical|center"
-                android:hint="NOMBRES APELLIDOS"
-                android:inputType="textPersonName"
-                android:textColor="?attr/colorBackgroundFloating"
-                android:textColorHighlight="@android:color/background_light"
-                android:textColorHint="@android:color/background_light"
-                android:textColorLink="?attr/colorControlHighlight"
-                android:textCursorDrawable="@android:color/background_light"
-                android:textSize="12sp" />
+        <EditText
+            android:id="@+id/etPasswordRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07"
+            android:ems="10"
+            android:gravity="bottom|center_vertical|center"
+            android:hint="PASSWORD"
+            android:inputType="textPassword"
+            android:textColor="?attr/colorBackgroundFloating"
+            android:textColorHighlight="@android:color/background_light"
+            android:textColorHint="@android:color/background_light"
+            android:textColorLink="?attr/colorControlHighlight"
+            android:textCursorDrawable="@android:color/background_light"
+            android:textSize="12sp" />
 
-            <EditText
-                android:id="@+id/etPasswordRegistro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.07"
-                android:ems="10"
-                android:gravity="bottom|center_vertical|center"
-                android:hint="PASSWORD"
-                android:inputType="textPassword"
-                android:textColor="?attr/colorBackgroundFloating"
-                android:textColorHighlight="@android:color/background_light"
-                android:textColorHint="@android:color/background_light"
-                android:textColorLink="?attr/colorControlHighlight"
-                android:textCursorDrawable="@android:color/background_light"
-                android:textSize="12sp" />
+        <EditText
+            android:id="@+id/etNombresEmpresaRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07"
+            android:ems="10"
+            android:gravity="bottom|center_vertical|center"
+            android:hint="NOMBRE DE LA EMPRESA"
+            android:inputType="textPersonName"
+            android:textColor="?attr/colorBackgroundFloating"
+            android:textColorHighlight="@android:color/background_light"
+            android:textColorHint="@android:color/background_light"
+            android:textColorLink="?attr/colorControlHighlight"
+            android:textCursorDrawable="@android:color/background_light"
+            android:textSize="12sp" />
 
-            <EditText
-                android:id="@+id/etNombresEmpresaRegistro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.07"
-                android:ems="10"
-                android:gravity="bottom|center_vertical|center"
-                android:hint="NOMBRE DE LA EMPRESA"
-                android:inputType="textPersonName"
-                android:textColor="?attr/colorBackgroundFloating"
-                android:textColorHighlight="@android:color/background_light"
-                android:textColorHint="@android:color/background_light"
-                android:textColorLink="?attr/colorControlHighlight"
-                android:textCursorDrawable="@android:color/background_light"
-                android:textSize="12sp" />
+        <EditText
+            android:id="@+id/etDireccionRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07"
+            android:ems="10"
+            android:gravity="bottom|center_vertical|center"
+            android:hint="DIRECCION"
+            android:inputType="textPersonName"
+            android:textColor="?attr/colorBackgroundFloating"
+            android:textColorHighlight="@android:color/background_light"
+            android:textColorHint="@android:color/background_light"
+            android:textColorLink="?attr/colorControlHighlight"
+            android:textCursorDrawable="@android:color/background_light"
+            android:textSize="12sp" />
 
-            <EditText
-                android:id="@+id/etDireccionRegistro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.07"
-                android:ems="10"
-                android:gravity="bottom|center_vertical|center"
-                android:hint="DIRECCION"
-                android:inputType="textPersonName"
-                android:textColor="?attr/colorBackgroundFloating"
-                android:textColorHighlight="@android:color/background_light"
-                android:textColorHint="@android:color/background_light"
-                android:textColorLink="?attr/colorControlHighlight"
-                android:textCursorDrawable="@android:color/background_light"
-                android:textSize="12sp" />
+        <Spinner
+            android:id="@+id/spinner_departamento_registro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07" />
 
-            <Spinner
-                android:id="@+id/spinner_departamento_registro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.07" />
+        <Spinner
+            android:id="@+id/spinner_provincia_registro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07" />
 
-            <Spinner
-                android:id="@+id/spinner_provincia_registro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.07" />
+        <Spinner
+            android:id="@+id/spinner_distrito_registro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07" />
 
-            <Spinner
-                android:id="@+id/spinner_distrito_registro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.07" />
+        <EditText
+            android:id="@+id/etCorreoRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07"
+            android:ems="10"
+            android:gravity="bottom|center_vertical|center"
+            android:hint="CORREO ELECTRÓNICO"
+            android:inputType="textEmailAddress"
+            android:textColor="?attr/colorBackgroundFloating"
+            android:textColorHighlight="@android:color/background_light"
+            android:textColorHint="@android:color/background_light"
+            android:textColorLink="?attr/colorControlHighlight"
+            android:textCursorDrawable="@android:color/background_light"
+            android:textSize="12sp" />
 
-            <EditText
-                android:id="@+id/etCorreoRegistro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.07"
-                android:ems="10"
-                android:gravity="bottom|center_vertical|center"
-                android:hint="CORREO ELECTRÓNICO"
-                android:inputType="textEmailAddress"
-                android:textColor="?attr/colorBackgroundFloating"
-                android:textColorHighlight="@android:color/background_light"
-                android:textColorHint="@android:color/background_light"
-                android:textColorLink="?attr/colorControlHighlight"
-                android:textCursorDrawable="@android:color/background_light"
-                android:textSize="12sp" />
+        <EditText
+            android:id="@+id/etTelefonoRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07"
+            android:ems="10"
+            android:gravity="bottom|center_vertical|center"
+            android:hint="TELEFONO MOVIL"
+            android:inputType="phone"
+            android:textColor="?attr/colorBackgroundFloating"
+            android:textColorHighlight="@android:color/background_light"
+            android:textColorHint="@android:color/background_light"
+            android:textColorLink="?attr/colorControlHighlight"
+            android:textCursorDrawable="@android:color/background_light"
+            android:textSize="12sp" />
 
-            <EditText
-                android:id="@+id/etTelefonoRegistro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.07"
-                android:ems="10"
-                android:gravity="bottom|center_vertical|center"
-                android:hint="TELEFONO MOVIL"
-                android:inputType="phone"
-                android:textColor="?attr/colorBackgroundFloating"
-                android:textColorHighlight="@android:color/background_light"
-                android:textColorHint="@android:color/background_light"
-                android:textColorLink="?attr/colorControlHighlight"
-                android:textCursorDrawable="@android:color/background_light"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-    </ScrollView>
-
+    </LinearLayout>
 </RelativeLayout>

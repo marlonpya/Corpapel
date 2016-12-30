@@ -20,48 +20,44 @@ public class Usuario extends RealmObject {
     private long id;
     @Required
     private String nombres;
-    private String apellidos;
+    private String nombre_empresa;
     private String direccion;
     private String departamento;
     private String provincia;
     private String distrito;
     private String correo;
     private String movil;
+    private String imagen;
     private boolean sesion;
-
-    public static int getUltimoId() {
-        Realm realm = Realm.getDefaultInstance();
-        Number number = realm.where(Usuario.class).max(ID);
-        return number == null ? 0 : number.intValue() + 1;
-    }
 
     public static void crearSesion(Usuario usuario) {
         Realm realm = Realm.getDefaultInstance();
         Usuario usuario1 = realm.where(Usuario.class).equalTo(ID, ID_SESION).findFirst();
-        realm.beginTransaction();
         if (usuario1 == null) {
+            realm.beginTransaction();
             Usuario usuario2 = realm.createObject(Usuario.class, ID_SESION);
             usuario2.setNombres(usuario.getNombres());
-            usuario2.setApellidos(usuario.getApellidos());
+            usuario2.setNombre_empresa(usuario.getNombre_empresa());
             usuario2.setDireccion(usuario.getDireccion());
             usuario2.setDepartamento(usuario.getDepartamento());
             usuario2.setProvincia(usuario.getProvincia());
             usuario2.setDistrito(usuario.getDistrito());
             usuario2.setCorreo(usuario.getCorreo());
             usuario2.setMovil(usuario.getMovil());
+            usuario2.setImagen(usuario.getImagen());
             usuario2.setSesion(true);
             realm.copyToRealm(usuario2);
             Log.d(TAG, usuario2.toString());
         } else {
-            usuario1.setId(ID_SESION);
             usuario1.setNombres(usuario.getNombres());
-            usuario1.setApellidos(usuario.getApellidos());
+            usuario1.setNombre_empresa(usuario.getNombre_empresa());
             usuario1.setDireccion(usuario.getDireccion());
             usuario1.setDepartamento(usuario.getDepartamento());
             usuario1.setProvincia(usuario.getProvincia());
             usuario1.setDistrito(usuario.getDistrito());
             usuario1.setCorreo(usuario.getCorreo());
             usuario1.setMovil(usuario.getMovil());
+            usuario1.setImagen(usuario.getImagen());
             usuario1.setSesion(true);
             Log.d(TAG, usuario1.toString());
         }
@@ -74,13 +70,14 @@ public class Usuario extends RealmObject {
         Usuario usuario = realm.where(Usuario.class).equalTo(ID, ID_SESION).findFirst();
         realm.beginTransaction();
         usuario.setNombres("");
-        usuario.setApellidos("");
+        usuario.setNombre_empresa("");
         usuario.setDireccion("");
         usuario.setDepartamento("");
         usuario.setProvincia("");
         usuario.setDistrito("");
         usuario.setCorreo("");
         usuario.setMovil("");
+        usuario.setImagen("");
         usuario.setSesion(false);
     }
 
@@ -105,12 +102,12 @@ public class Usuario extends RealmObject {
         this.nombres = nombres;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getNombre_empresa() {
+        return nombre_empresa;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setNombre_empresa(String nombre_empresa) {
+        this.nombre_empresa = nombre_empresa;
     }
 
     public String getDireccion() {
@@ -159,6 +156,14 @@ public class Usuario extends RealmObject {
 
     public void setMovil(String movil) {
         this.movil = movil;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public boolean isSesion() {

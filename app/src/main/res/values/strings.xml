@@ -18,6 +18,10 @@
     <string name="registro_ok">Usuario registrado satisfactoriamente</string>
     <string name="aceptar">Aceptar</string>
     <string name="registro_error">Ocurrió un error al momento de registrar usuario</string>
+    <string name="cerrar_sesion">¿ Está seguro de cerrar sesión ?</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="permiso_correo_error">Se requiere autorizar correo</string>
+    <string name="conexion_error">Ocurrió un error de conexión, vuelva a intentarlo</string>
 
     <string-array name="DEPARTAMENTO_array">
         <item>DEPARTAMENTO</item>
