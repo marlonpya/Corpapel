@@ -5,6 +5,7 @@ import android.util.Log;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
 
 /**
@@ -28,13 +29,15 @@ public class Usuario extends RealmObject {
     private String correo;
     private String movil;
     private String imagen;
+    private String password;
+    private String id_facebook;
     private boolean sesion;
 
     public static void crearSesion(Usuario usuario) {
         Realm realm = Realm.getDefaultInstance();
         Usuario usuario1 = realm.where(Usuario.class).equalTo(ID, ID_SESION).findFirst();
+        realm.beginTransaction();
         if (usuario1 == null) {
-            realm.beginTransaction();
             Usuario usuario2 = realm.createObject(Usuario.class, ID_SESION);
             usuario2.setNombres(usuario.getNombres());
             usuario2.setNombre_empresa(usuario.getNombre_empresa());
@@ -45,6 +48,8 @@ public class Usuario extends RealmObject {
             usuario2.setCorreo(usuario.getCorreo());
             usuario2.setMovil(usuario.getMovil());
             usuario2.setImagen(usuario.getImagen());
+            usuario2.setPassword(usuario.getPassword());
+            usuario2.setId_facebook(usuario.getId_facebook());
             usuario2.setSesion(true);
             realm.copyToRealm(usuario2);
             Log.d(TAG, usuario2.toString());
@@ -58,6 +63,8 @@ public class Usuario extends RealmObject {
             usuario1.setCorreo(usuario.getCorreo());
             usuario1.setMovil(usuario.getMovil());
             usuario1.setImagen(usuario.getImagen());
+            usuario1.setPassword(usuario.getPassword());
+            usuario1.setId_facebook(usuario.getId_facebook());
             usuario1.setSesion(true);
             Log.d(TAG, usuario1.toString());
         }
@@ -78,7 +85,12 @@ public class Usuario extends RealmObject {
         usuario.setCorreo("");
         usuario.setMovil("");
         usuario.setImagen("");
+        usuario.setPassword("");
+        usuario.setId_facebook("");
         usuario.setSesion(false);
+        //modificacion AMD
+        realm.commitTransaction();
+        realm.close();
     }
 
     public static Usuario getUsuario() {
@@ -166,11 +178,27 @@ public class Usuario extends RealmObject {
         this.imagen = imagen;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public boolean isSesion() {
         return sesion;
     }
 
     public void setSesion(boolean sesion) {
         this.sesion = sesion;
+    }
+
+    public String getId_facebook() {
+        return id_facebook;
+    }
+
+    public void setId_facebook(String id_facebook) {
+        this.id_facebook = id_facebook;
     }
 }

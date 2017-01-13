@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.support.multidex.MultiDex;
 import android.util.Base64;
 import android.util.Log;
 
@@ -37,12 +38,18 @@ public class Configuracion extends Application {
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
                 .modules(Realm.getDefaultModule())
                 .name("corpapel.db")
-                .schemaVersion(0)
+                .schemaVersion(1)
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
+    }
+
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
+        MultiDex.install(this);
     }
 
     public static synchronized Configuracion getInstancia() {

@@ -11,7 +11,7 @@ import android.widget.Spinner;
 
 import com.littletemplate.corpapel.app.BaseActivity;
 
-public class EditActivity extends BaseActivity implements AdapterView.OnItemSelectedListener  {
+public class EditarActivity extends BaseActivity implements AdapterView.OnItemSelectedListener  {
     Spinner spinnerDistrito;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class EditActivity extends BaseActivity implements AdapterView.OnItemSele
 
         yourButton.setOnClickListener(new View.OnClickListener() {
                                           public void onClick(View v) {
-                                              startActivity(new Intent(EditActivity.this, PrincipalActivity.class));
+                                              startActivity(new Intent(EditarActivity.this, PrincipalActivity.class));
                                           }
                                       }
         );

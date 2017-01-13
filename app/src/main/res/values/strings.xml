@@ -22,6 +22,16 @@
     <string name="cancelar">Cancelar</string>
     <string name="permiso_correo_error">Se requiere autorizar correo</string>
     <string name="conexion_error">Ocurrió un error de conexión, vuelva a intentarlo</string>
+    <string name="cargando">Cargando...</string>
+    <string name="actualizando">Actualizando...</string>
+    <string name="confirm_edit">¿ Está seguro de los datos ingresados ?</string>
+    <string name="completar_campos">Complete los campos para atender su consulta o sugerencia</string>
+    <string name="nombre_apellidos">Nombre y Apellido</string>
+    <string name="correo_electronico">Correo Electrónico</string>
+    <string name="sugerencia">Sugerencia</string>
+    <string name="consulta">Consulta</string>
+    <string name="sugerencia_enviada">Sugerencia Enviada</string>
+
 
     <string-array name="DEPARTAMENTO_array">
         <item>DEPARTAMENTO</item>

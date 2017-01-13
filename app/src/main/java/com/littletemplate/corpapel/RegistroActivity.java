@@ -23,17 +23,27 @@ import com.android.volley.toolbox.StringRequest;
 import com.littletemplate.corpapel.apis.FacebookApi;
 import com.littletemplate.corpapel.app.BaseActivity;
 import com.littletemplate.corpapel.app.Configuracion;
+import com.littletemplate.corpapel.model.Departamento;
+import com.littletemplate.corpapel.model.Distrito;
+import com.littletemplate.corpapel.model.Provincia;
+import com.littletemplate.corpapel.model.Usuario;
 import com.littletemplate.corpapel.util.ConexionBroadcastReceiver;
 import com.littletemplate.corpapel.util.Constante;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnItemSelected;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class RegistroActivity extends BaseActivity {
     public static final String TAG = RegistroActivity.class.getSimpleName();
@@ -54,26 +64,69 @@ public class RegistroActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         iniciarProgresDialog();
+        if (Departamento.getUltimoId() == 0){
+            if (ConexionBroadcastReceiver.isConect()){
+                requestDepartamento();
+                requestProvincia();
+                requestDistrito();
+            }
+            else {
+                ConexionBroadcastReceiver.showSnack(layout, this);
+            }
+        }
+        else{
+            llenarDepartamento();
+        }
 
-        ArrayAdapter<CharSequence> adapterDEPARTAMENTO = ArrayAdapter.createFromResource(
-                this, R.array.DEPARTAMENTO_array, R.layout.spinner_item);
-        adapterDEPARTAMENTO.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spDepartamento.setAdapter(adapterDEPARTAMENTO);
-
-        ArrayAdapter<CharSequence> adapterPROVINCIA = ArrayAdapter.createFromResource(
-                this, R.array.PROVINCIA_array, R.layout.spinner_item);
-        adapterPROVINCIA.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spProvincia.setAdapter(adapterPROVINCIA);
-
-        ArrayAdapter<CharSequence> adapterDISTRITO = ArrayAdapter.createFromResource(
-                this, R.array.DISTRITO_array, R.layout.spinner_item);
-        adapterDISTRITO.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spDistrito.setAdapter(adapterDISTRITO);
 
         if (getIntent().hasExtra(Constante.S_REGISTRO_CORREO) && getIntent().hasExtra(Constante.S_REGISTRO_NOMBRE)) {
             etCorreo.setText(getIntent().getStringExtra(Constante.S_REGISTRO_CORREO));
             etNombres.setText(getIntent().getStringExtra(Constante.S_REGISTRO_NOMBRE));
         }
+    }
+
+    private void requestProvincia() {
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                Constante.URL_LISTAR_PROVINCIA,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jArray = jsonObject.getJSONArray("provincia");
+                            Realm realm = Realm.getDefaultInstance();
+                            for (int i = 0; i < jArray.length(); i++) {
+                                realm.beginTransaction();
+                                Provincia provincia = realm.createObject(Provincia.class, Provincia.getUltimoId());
+                                provincia.setIdServer(jArray.getJSONObject(i).getInt("idProvincia"));
+                                provincia.setFkDepartamento(jArray.getJSONObject(i).getInt("idDepartamento"));
+                                provincia.setNomProvincia(jArray.getJSONObject(i).getString("nom_provincia"));
+                                realm.copyToRealm(provincia);
+                                realm.commitTransaction();
+                            }
+                            realm.close();
+                            //int codigo = jsonObject.getInt("codigo");
+                            Log.d(TAG, jsonObject.toString());
+                            //mensajeSistema(codigo);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e(TAG, e.toString(), e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        VolleyLog.e(error.toString());
+                    }
+                }
+
+        );
+        Configuracion.getInstancia().addRequestQueue(request, TAG);
+
     }
 
     private void iniciarProgresDialog() {
@@ -93,6 +146,160 @@ public class RegistroActivity extends BaseActivity {
         } else {
             Toast.makeText(this, R.string.ingresar_todos_datos, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void requestDepartamento() {
+        progressDialog.show();
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                Constante.URL_LISTAR_DEPARTAMENTO,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jArray = jsonObject.getJSONArray("departamento");
+                            Realm realm = Realm.getDefaultInstance();
+                            for (int i = 0; i < jArray.length(); i++) {
+                                realm.beginTransaction();
+                                Departamento departamento = realm.createObject(Departamento.class, Departamento.getUltimoId());
+                                departamento.setIdServer(jArray.getJSONObject(i).getInt("idDepartamento"));
+                                departamento.setNomDepartamento(jArray.getJSONObject(i).getString("nom_departamento"));
+                                realm.copyToRealm(departamento);
+                                realm.commitTransaction();
+                            }
+                            realm.close();
+                            //int codigo = jsonObject.getInt("codigo");
+                            Log.d(TAG, jsonObject.toString());
+                            //mensajeSistema(codigo);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e(TAG, e.toString(), e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        VolleyLog.e(error.toString());
+                    }
+                }
+        );
+        Configuracion.getInstancia().addRequestQueue(request, TAG);
+    }
+
+    private void llenarDepartamento(){
+        Departamento departamento = new Departamento();
+        List<String> array = departamento.listarDepartamento();
+        ArrayAdapter spDepartamentoAdapter = new ArrayAdapter(this,
+                R.layout.spinner_item,array);
+        spDepartamentoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spDepartamento.setAdapter(spDepartamentoAdapter);
+    }
+
+    @OnItemSelected(R.id.spinner_departamento_registro)
+    public void spinnerItemSelectedDep(Spinner spinner, int pos) {
+        llenarProvincia(spDepartamento.getSelectedItem().toString());
+    }
+
+    @OnItemSelected(R.id.spinner_provincia_registro)
+    public void spinnerItemSelectedProv(Spinner spinner, int pos) {
+        llenarDistrito(spProvincia.getSelectedItem().toString());
+    }
+
+    private void llenarDistrito(String nomProv) {
+        Realm realm = Realm.getDefaultInstance();
+        spDistrito.setAdapter(null);
+        int provId=0;
+        RealmResults<Provincia> provincias = realm.where(Provincia.class).findAll();
+        for (int i = 0; i < provincias.size(); i++) {
+            if (provincias.get(i).getNomProvincia().equals(nomProv)){
+                provId=provincias.get(i).getIdServer();
+            }
+        }
+        RealmResults<Distrito> distritos = realm.where(Distrito.class).findAll();
+        final List<String> nombre_distritos = new ArrayList<>();
+        for (int i = 0; i < distritos.size(); i++){
+            if (distritos.get(i).getFkProvincia()==provId){
+                nombre_distritos.add(distritos.get(i).getNomDistrito());
+            }
+        }
+        ArrayAdapter spDistritoAdapter = new ArrayAdapter(this,
+                R.layout.spinner_item,nombre_distritos);
+        spDistritoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spDistrito.setAdapter(spDistritoAdapter);
+    }
+
+    private void requestDistrito() {
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                Constante.URL_LISTAR_DISTRITO,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jArray = jsonObject.getJSONArray("distrito");
+                            Realm realm = Realm.getDefaultInstance();
+                            for (int i = 0; i < jArray.length(); i++) {
+                                realm.beginTransaction();
+                                Distrito distrito = realm.createObject(Distrito.class, Distrito.getUltimoId());
+                                distrito.setIdServer(jArray.getJSONObject(i).getInt("idDistrito"));
+                                distrito.setFkProvincia(jArray.getJSONObject(i).getInt("idProvincia"));
+                                distrito.setNomDistrito(jArray.getJSONObject(i).getString("nom_distrito"));
+                                realm.copyToRealm(distrito);
+                                realm.commitTransaction();
+                            }
+                            realm.close();
+                            //int codigo = jsonObject.getInt("codigo");
+                            Log.d(TAG, jsonObject.toString());
+                            llenarDepartamento();
+                            progressDialog.hide();
+                            //mensajeSistema(codigo);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e(TAG, e.toString(), e);
+                            progressDialog.hide();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        VolleyLog.e(error.toString());
+                        progressDialog.hide();
+                    }
+                }
+
+        );
+        Configuracion.getInstancia().addRequestQueue(request, TAG);
+    }
+
+    private void llenarProvincia(String nomDep) {
+        Realm realm = Realm.getDefaultInstance();
+        spProvincia.setAdapter(null);
+        int depId=0;
+        RealmResults<Departamento> departamentos = realm.where(Departamento.class).findAll();
+        for (int i = 0; i < departamentos.size(); i++) {
+            if (departamentos.get(i).getNomDepartamento().equals(nomDep)){
+                depId=departamentos.get(i).getIdServer();
+            }
+        }
+        RealmResults<Provincia> provincias = realm.where(Provincia.class).findAll();
+        final List<String> nombre_provincias = new ArrayList<>();
+        for (int i = 0; i < provincias.size(); i++){
+            if (provincias.get(i).getFkDepartamento()==depId){
+                nombre_provincias.add(provincias.get(i).getNomProvincia());
+            }
+        }
+        ArrayAdapter spProvinciaAdapter = new ArrayAdapter(this,
+                R.layout.spinner_item,nombre_provincias);
+        spProvinciaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spProvincia.setAdapter(spProvinciaAdapter);
     }
 
     private void requestRegistrarse() {
