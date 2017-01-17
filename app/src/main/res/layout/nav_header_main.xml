@@ -13,13 +13,13 @@
 
     <ImageView
         android:id="@+id/navImagen"
+        android:src="@drawable/icono_perfil"
         android:layout_width="99dp"
         android:layout_height="99dp"
         android:layout_marginBottom="0dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/fotoperfil" />
+        android:layout_marginTop="60dp"/>
 
     <TextView
         android:id="@+id/navNombre"
@@ -27,7 +27,6 @@
         android:layout_height="30dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:text="Sofia Marquez Villar"
         android:textColor="@android:color/background_light"
         android:textSize="18sp" />
 

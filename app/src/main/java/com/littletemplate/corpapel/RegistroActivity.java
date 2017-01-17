@@ -78,7 +78,6 @@ public class RegistroActivity extends BaseActivity {
             llenarDepartamento();
         }
 
-
         if (getIntent().hasExtra(Constante.S_REGISTRO_CORREO) && getIntent().hasExtra(Constante.S_REGISTRO_NOMBRE)) {
             etCorreo.setText(getIntent().getStringExtra(Constante.S_REGISTRO_CORREO));
             etNombres.setText(getIntent().getStringExtra(Constante.S_REGISTRO_NOMBRE));
@@ -126,7 +125,6 @@ public class RegistroActivity extends BaseActivity {
 
         );
         Configuracion.getInstancia().addRequestQueue(request, TAG);
-
     }
 
     private void iniciarProgresDialog() {

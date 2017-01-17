@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -27,8 +28,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -41,13 +46,11 @@ import com.littletemplate.corpapel.apis.FacebookApi;
 import com.littletemplate.corpapel.app.BaseActivity;
 import com.littletemplate.corpapel.fragment.EditarFragment;
 import com.littletemplate.corpapel.fragment.MapaFragment;
-import com.littletemplate.corpapel.fragment.ProductosFragment;
 import com.littletemplate.corpapel.fragment.SugerenciaFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.littletemplate.corpapel.Clases.Tienda;
 import com.littletemplate.corpapel.model.Usuario;
 import com.littletemplate.corpapel.util.Util;
 
@@ -64,36 +67,24 @@ public class PrincipalActivity extends BaseActivity
 
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
-    private List<Tienda> tiendas = new ArrayList<>();
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    public boolean checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
 
+    private boolean permisoLocation=false;
+
+    public void checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // Asking user if explanation is needed
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-                //Prompt the user once explanation has been shown
-                ActivityCompat.requestPermissions(this,
-                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-
-
-            } else {
-                // No explanation needed, we can request the permission.
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+                ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            else {
                 ActivityCompat.requestPermissions(this,
                         new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
             }
-            return false;
-        } else {
-            return true;
+        }else{
+            Fragment fragment = new MapaFragment();
+            mostrarFragment(fragment);
         }
     }
 
@@ -110,10 +101,8 @@ public class PrincipalActivity extends BaseActivity
                     if (ContextCompat.checkSelfPermission(this,
                             android.Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
-
-                        if (mGoogleApiClient == null) {
-                            //buildGoogleApiClient();
-                        }
+                        permisoLocation=true;
+                        Log.v("Amd", "FragSet");
                     }
 
                 } else {
@@ -139,12 +128,21 @@ public class PrincipalActivity extends BaseActivity
         /*SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);*/
         //mapFragment.getMapAsync(this);
-        //tiendas    = DBConnection.GetTiendas(this);
 
         //mMap.getUiSettings().setScrollGesturesEnabled(false);
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_contenedor, new EditarFragment()).commit();
         navigationView.getMenu().getItem(0).setChecked(true);
         drawer.openDrawer(GravityCompat.START);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
         sesion();
     }
 
@@ -179,25 +177,41 @@ public class PrincipalActivity extends BaseActivity
         if (id == R.id.item_editar) {
             seleccionado = true;
             fragment = new EditarFragment();
+            mostrarFragment(fragment);
         } else if (id == R.id.item_buscar) {
-            seleccionado = true;
-            fragment = new MapaFragment();
+            Log.v("Amd", "Tap");
+            checkLocationPermission();
+            /*
+            if (permisoLocation){
+                Log.v("Amd", "Allowed");
+                seleccionado = true;
+                fragment = new MapaFragment();
+            }*/
         } else if (id == R.id.item_contacto) {
             seleccionado = true;
             fragment = new SugerenciaFragment();
+            mostrarFragment(fragment);
         } else if (id == R.id.item_cerrar) {
             cerrarSesion();
         }
-        if (seleccionado) {
+
+        /*if (seleccionado) {
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.fl_contenedor, fragment);
             transaction.commit();
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void mostrarFragment(Fragment fragment){
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.fl_contenedor, fragment);
+        transaction.commit();
     }
 
     private void dialogoMapa() {
@@ -223,6 +237,11 @@ public class PrincipalActivity extends BaseActivity
                         if (FacebookApi.conectado()) {
                             FacebookApi.cerrarSesion();
                         }
+                        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+                            Log.v("AMD", "Logout Google");
+                            signOut();
+                        }
+
                         Usuario.cerrarSesion();
                         startActivity(new Intent(PrincipalActivity.this, IniciarSesionActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -230,6 +249,26 @@ public class PrincipalActivity extends BaseActivity
                 })
                 .setNegativeButton(R.string.cancelar, null)
                 .show();
+    }
+
+    private void signOut() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        // ...
+                    }
+                });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (permisoLocation){
+            Fragment fragment = new MapaFragment();
+            mostrarFragment(fragment);
+            permisoLocation=false;
+        }
     }
 
     @Override

@@ -34,11 +34,10 @@ public class Configuracion extends Application {
         super.onCreate();
         mInstancia = this;
 
-        Realm.init(this);
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
-                .modules(Realm.getDefaultModule())
+        //Realm.init(this);
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getApplicationContext())
                 .name("corpapel.db")
-                .schemaVersion(1)
+                .schemaVersion(0)
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);

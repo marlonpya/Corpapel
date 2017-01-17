@@ -17,10 +17,15 @@ public class Constante {
     public static final String URL_LISTAR_DISTRITO              = "http://uc-web.mobi/CorpapelPHP/listarDistrito";
     public static final String URL_LISTAR_DISTRITO_X_PROV       = "http://uc-web.mobi/CorpapelPHP/listarDistritoXProvincia";
     public static final String URL_LISTAR_TIENDA                = "http://uc-web.mobi/CorpapelPHP/listarTienda";
-    public static final String URL_LISTAR_PRODUCTO_X_TIENDA     = "http://uc-web.mobi/CorpapelPHP/listarProductoXTienda";
+    //Antes
+    //public static final String URL_LISTAR_PRODUCTO_X_TIENDA     = "http://uc-web.mobi/CorpapelPHP/listarProductoXTienda";
+    //Despues
+    public static final String URL_LISTAR_PRODUCTO_X_TIENDA     = "http://uc-web.mobi/CorpapelPHP/listarProductoCopyXTienda";
     public static final String URL_ENVIAR_SUGERENCIA            = "http://uc-web.mobi/CorpapelPHP/enviarSugerencia";
     public static final String URL_REGISTRAR_USUARIO_FB         = "http://uc-web.mobi/CorpapelPHP/registrarUsuarioFB";
     public static final String URL_EDITAR_USUARIO_FB            = "http://uc-web.mobi/CorpapelPHP/editarUsuarioFB";
+    public static final String URL_REGISTRAR_USUARIO_GOOGLE     = "http://uc-web.mobi/CorpapelPHP/registrarUsuarioGoogle";
+    public static final String URL_EDITAR_USUARIO_GOOGLE        = "http://uc-web.mobi/CorpapelPHP/editarUsuarioGoogle";
 
     //PUT EXTRAS
     public static final String S_REGISTRO_NOMBRE = "S_REGISTRO_NOMBRE";

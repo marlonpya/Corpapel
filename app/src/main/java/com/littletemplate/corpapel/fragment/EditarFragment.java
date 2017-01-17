@@ -33,6 +33,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.littletemplate.corpapel.PrincipalActivity;
 //import com.littletemplate.corpapel.PrincipalActivity_ViewBinding;
 import com.littletemplate.corpapel.R;
+import com.littletemplate.corpapel.apis.FacebookApi;
 import com.littletemplate.corpapel.app.Configuracion;
 import com.littletemplate.corpapel.model.Departamento;
 import com.littletemplate.corpapel.model.Distrito;
@@ -95,7 +96,9 @@ public class EditarFragment extends Fragment {
             spDistrito.setPrompt(usuario.getDistrito());*/
             etTelefono.setText(usuario.getMovil());
             etPassword.setText(usuario.getPassword());
-
+            if (FacebookApi.conectado() || !TextUtils.isEmpty(usuario.getId_google()) ){
+                etPassword.setVisibility(View.INVISIBLE);
+            }
         }
 
         if (Departamento.getUltimoId() == 0){
@@ -466,6 +469,57 @@ public class EditarFragment extends Fragment {
         Configuracion.getInstancia().addRequestQueue(request, TAG);
     }
 
+    private void requestEditarUsuarioGoogle() {
+        progressDialog.show();
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                Constante.URL_EDITAR_USUARIO_GOOGLE,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            int codigo = jsonObject.getInt("codigo");
+                            Log.d(TAG, jsonObject.toString());
+                            progressDialog.hide();
+                            mensajeSistema(codigo);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e(TAG, e.toString(), e);
+                            progressDialog.hide();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        VolleyLog.e(error.toString());
+                        progressDialog.hide();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("nombre_apellidos", etNombre.getText().toString().trim());
+                params.put("nombre_empresa", etNombreEmpresa.getText().toString().trim());
+                params.put("direccion", etDireccion.getText().toString().trim());
+                params.put("departamento", spDepartamento.getSelectedItem().toString().trim());
+                params.put("provincia", spProvincia.getSelectedItem().toString().trim());
+                params.put("distrito", spDistrito.getSelectedItem().toString().trim());
+                Usuario usuario = Usuario.getUsuario();
+                params.put("id_google", usuario.getId_google());
+                params.put("correo", usuario.getCorreo());
+                params.put("telefono", etTelefono.getText().toString().trim());
+                return params;
+            }
+        };
+        Configuracion.getInstancia().addRequestQueue(request, TAG);
+    }
+
+
     private void confirmarActualizacion() {
         new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.app_name)
@@ -474,9 +528,11 @@ public class EditarFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        if (!TextUtils.isEmpty(Usuario.getUsuario().getId_facebook()))
-                        {
+                        if (!TextUtils.isEmpty(Usuario.getUsuario().getId_facebook())){
                             requestEditarUsuarioFB();
+                        }
+                        else if (!TextUtils.isEmpty(Usuario.getUsuario().getId_google())){
+                            requestEditarUsuarioGoogle();
                         }
                         else {
                             requestEditarUsuario();

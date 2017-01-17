@@ -7,6 +7,9 @@
     card_view:cardCornerRadius="4dp">
 
     <LinearLayout
+        android:id="@+id/btnSeleccionar"
+        android:paddingTop="25dp"
+        android:paddingBottom="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -16,7 +19,7 @@
             android:id="@+id/producto_imagen"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            card_view:srcCompat="@drawable/rollo" />
+            card_view:srcCompat="@drawable/icono_no_imagen" />
 
         <TextView
             android:id="@+id/producto_titulo"
@@ -37,7 +40,7 @@
             android:textSize="10sp" />
 
         <TextView
-            android:id="@+id/producto_precioDescuento"
+            android:id="@+id/precio_anterior"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -46,7 +49,7 @@
 
 
         <TextView
-            android:id="@+id/producto_precio"
+            android:id="@+id/precio_actual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"

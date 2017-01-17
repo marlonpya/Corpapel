@@ -148,6 +148,7 @@
                 android:layout_weight="0.06" />
 
             <TextView
+                android:visibility="invisible"
                 android:id="@+id/etCorreoEditar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

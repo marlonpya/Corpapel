@@ -93,7 +93,6 @@ public class IniciarSesionActivity extends BaseActivity implements GoogleApiClie
         signInButton.setScopes(gso.getScopeArray());
         findViewById(R.id.sign_in_button).setOnClickListener(this);*/
 
-        //DBConnection.GetTiendas(this);
         iniciarProgresDialog();
         callbackManager = CallbackManager.Factory.create();
     }
@@ -267,7 +266,8 @@ public class IniciarSesionActivity extends BaseActivity implements GoogleApiClie
                                 JSONObject jData = jsonObject.getJSONObject("data");
                                 JSONObject jUsuario = jData.getJSONObject("usuario");
                                 Usuario usuario = new Usuario();
-                                usuario.setNombres(!jUsuario.getString("USU_NOMBRE").equals("null")               ? jUsuario.getString("USU_NOMBRE") : "");
+                                //usuario.setNombres(!jUsuario.getString("USU_NOMBRE").equals("null")               ? jUsuario.getString("USU_NOMBRE") : "");
+                                usuario.setNombres(nombre);
                                 usuario.setNombre_empresa(!jUsuario.getString("USU_NOMBRE_EMPRESA").equals("null")? jUsuario.getString("USU_NOMBRE_EMPRESA") : "");
                                 usuario.setDireccion(!jUsuario.getString("USU_DIRECCION").equals("null")          ? jUsuario.getString("USU_DIRECCION") : "");
                                 usuario.setDepartamento(!jUsuario.getString("USU_DEPARTAMENTO").equals("null")    ? jUsuario.getString("USU_DEPARTAMENTO") : "");
@@ -275,7 +275,8 @@ public class IniciarSesionActivity extends BaseActivity implements GoogleApiClie
                                 usuario.setDistrito(!jUsuario.getString("USU_DISTRITO").equals("null")            ? jUsuario.getString("USU_DISTRITO") : "");
                                 usuario.setCorreo(!jUsuario.getString("USU_CORREO").equals("null")                ? jUsuario.getString("USU_CORREO") : "");
                                 usuario.setMovil(!jUsuario.getString("USU_TELEFONO").equals("null")               ? jUsuario.getString("USU_TELEFONO") : "");
-                                usuario.setImagen(!jUsuario.getString("USU_IMAGEN").equals("null")                ? jUsuario.getString("USU_IMAGEN") : "");
+                                //usuario.setImagen(!jUsuario.getString("USU_IMAGEN").equals("null")                ? jUsuario.getString("USU_IMAGEN") : "");
+                                usuario.setImagen(foto);
                                 usuario.setId_facebook(!jUsuario.getString("USU_ID_FB").equals("null")            ? jUsuario.getString("USU_ID_FB") : "");
                                 Usuario.crearSesion(usuario);
                                 Log.d(TAG, usuario.toString());
@@ -288,6 +289,80 @@ public class IniciarSesionActivity extends BaseActivity implements GoogleApiClie
                                 .putExtra(Constante.S_REGISTRO_NOMBRE, foto)
                                 .putExtra(Constante.S_REGISTRO_ID_FB, id));*/
                                 requestRegistrarseFB(id, nombre, foto);
+                                progressDialog.hide();
+
+                            } else {
+                                progressDialog.hide();
+                                Toast.makeText(IniciarSesionActivity.this, R.string.conexion_error, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e(TAG, e.toString(), e);
+                            progressDialog.hide();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.e(error.toString());
+                        progressDialog.hide();
+                        progressDialog.hide();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                //params.put("correo", correo);
+                params.put("id", id);
+                params.put("red_social", red_social);
+                return params;
+            }
+        };
+        Configuracion.getInstancia().addRequestQueue(request, TAG);
+    }
+
+    private void requestIniciarSesionGoogle(final String id, final String red_social, final String nombre, final String foto, final String correo) {
+        progressDialog.show();
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                Constante.URL_INICIAR_SESION_REDSOCIAL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            int codigo = jsonObject.getInt("codigo");
+                            if (codigo == 200) {
+                                JSONObject jData = jsonObject.getJSONObject("data");
+                                JSONObject jUsuario = jData.getJSONObject("usuario");
+                                Usuario usuario = new Usuario();
+                                //usuario.setNombres(!jUsuario.getString("USU_NOMBRE").equals("null")               ? jUsuario.getString("USU_NOMBRE") : "");
+                                usuario.setNombres(nombre);
+                                usuario.setNombre_empresa(!jUsuario.getString("USU_NOMBRE_EMPRESA").equals("null")? jUsuario.getString("USU_NOMBRE_EMPRESA") : "");
+                                usuario.setDireccion(!jUsuario.getString("USU_DIRECCION").equals("null")          ? jUsuario.getString("USU_DIRECCION") : "");
+                                usuario.setDepartamento(!jUsuario.getString("USU_DEPARTAMENTO").equals("null")    ? jUsuario.getString("USU_DEPARTAMENTO") : "");
+                                usuario.setProvincia(!jUsuario.getString("USU_PROVINCIA").equals("null")          ? jUsuario.getString("USU_PROVINCIA") : "");
+                                usuario.setDistrito(!jUsuario.getString("USU_DISTRITO").equals("null")            ? jUsuario.getString("USU_DISTRITO") : "");
+                                //usuario.setCorreo(!jUsuario.getString("USU_CORREO").equals("null")                ? jUsuario.getString("USU_CORREO") : "");
+                                usuario.setCorreo(correo);
+                                usuario.setMovil(!jUsuario.getString("USU_TELEFONO").equals("null")               ? jUsuario.getString("USU_TELEFONO") : "");
+                                //usuario.setImagen(!jUsuario.getString("USU_IMAGEN").equals("null")                ? jUsuario.getString("USU_IMAGEN") : "");
+                                usuario.setImagen(foto);
+                                usuario.setId_google(!jUsuario.getString("USU_ID_GOOGLE").equals("null")          ? jUsuario.getString("USU_ID_GOOGLE") : "");
+                                Usuario.crearSesion(usuario);
+                                Log.d(TAG, usuario.toString());
+                                progressDialog.hide();
+                                startActivity(new Intent(IniciarSesionActivity.this, PrincipalActivity.class)
+                                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                            } else if (codigo == -4) {/*
+                                startActivity(new Intent(IniciarSesionActivity.this, RegistroActivity.class)
+                                .putExtra(Constante.S_REGISTRO_NOMBRE, nombre)
+                                .putExtra(Constante.S_REGISTRO_NOMBRE, foto)
+                                .putExtra(Constante.S_REGISTRO_ID_FB, id));*/
+                                requestRegistrarseGoogle(id, nombre, foto, correo);
                                 progressDialog.hide();
 
                             } else {
@@ -341,15 +416,18 @@ public class IniciarSesionActivity extends BaseActivity implements GoogleApiClie
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-        Log.v("AMD", result.getStatus().getStatusCode()+"");
-        Log.v("AMD", "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            Log.v("AMD", acct.getEmail());
-            Intent mainLobby = new Intent(IniciarSesionActivity.this, PrincipalActivity.class);
+            String id = acct.getId();
+            String nombre = acct.getDisplayName();
+            String foto = acct.getPhotoUrl()+"";
+            String correo = acct.getEmail()+"";
+
+            requestIniciarSesionGoogle(id, "google", nombre, foto, correo);
         } else {
             // Signed out, show unauthenticated UI.
+
         }
     }
 
@@ -411,6 +489,61 @@ public class IniciarSesionActivity extends BaseActivity implements GoogleApiClie
                 params.put("nombre_apellidos", nombre);
                 params.put("id_fb", id);
                 params.put("imagen", foto);
+                return params;
+            }
+        };
+        Configuracion.getInstancia().addRequestQueue(request, TAG);
+    }
+
+    private void requestRegistrarseGoogle(final String id, final String nombre, final String foto, final String correo) {
+        progressDialog.show();
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                Constante.URL_REGISTRAR_USUARIO_GOOGLE,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            int codigo = jsonObject.getInt("codigo");
+                            Log.d(TAG, jsonObject.toString());
+                            Usuario usuario = new Usuario();
+                            usuario.setNombres(nombre);
+                            usuario.setImagen(foto);
+                            usuario.setId_google(id);
+                            usuario.setCorreo(correo);
+                            Usuario.crearSesion(usuario);
+
+
+                            startActivity(new Intent(IniciarSesionActivity.this, PrincipalActivity.class)
+                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                            progressDialog.hide();
+                            //mensajeSistema(codigo);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e(TAG, e.toString(), e);
+                            progressDialog.hide();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        VolleyLog.e(error.toString());
+                        progressDialog.hide();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("nombre_apellidos", nombre);
+                params.put("id_google", id);
+                params.put("imagen", foto);
+                params.put("correo", correo);
                 return params;
             }
         };

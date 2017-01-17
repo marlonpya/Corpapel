@@ -17,6 +17,7 @@
 
 
         <LinearLayout
+            android:id="@+id/btnWaze"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.2"
@@ -29,14 +30,16 @@
 
 
             <ImageView
+                android:clickable="false"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                app:srcCompat="@drawable/ic_menu_gallery"
+                android:src="@drawable/direccion_icon"
 
                 />
 
             <LinearLayout
+                android:clickable="false"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
@@ -45,6 +48,7 @@
 
 
                 <TextView
+                    android:clickable="false"
                     android:id="@+id/txt_nombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -53,6 +57,7 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:clickable="false"
                     android:id="@+id/txt_direccion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -61,6 +66,16 @@
                     android:textSize="8sp" />
 
                 <TextView
+                    android:clickable="false"
+                    android:id="@+id/txt_telefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:text="Teléfono: 987654321"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:clickable="false"
                     android:id="@+id/txt_horario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -72,6 +87,7 @@
 
 
             <LinearLayout
+                android:clickable="false"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
@@ -80,6 +96,7 @@
                 android:paddingLeft="0dp">
 
                 <TextView
+                    android:clickable="false"
                     android:id="@+id/txt_distancia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -115,11 +132,12 @@
 
 
             <ImageView
+
                 android:clickable="false"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                app:srcCompat="@drawable/ic_menu_gallery"
+                android:src="@drawable/catalogo_icon"
 
                 />
 
@@ -172,6 +190,7 @@
             android:background="@android:color/darker_gray" />
 
         <LinearLayout
+            android:id="@+id/btnCompartir"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.2"
@@ -184,14 +203,16 @@
 
 
             <ImageView
+                android:clickable="false"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                app:srcCompat="@drawable/ic_menu_gallery"
+                android:src="@drawable/compartir_icon"
 
                 />
 
             <LinearLayout
+                android:clickable="false"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
@@ -200,6 +221,7 @@
 
 
                 <TextView
+                    android:clickable="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
@@ -207,6 +229,7 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:clickable="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
@@ -217,6 +240,7 @@
 
 
             <LinearLayout
+                android:clickable="false"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"
@@ -245,7 +269,7 @@
 
 
             android:background="@android:color/holo_orange_light"
-            android:text="Tienda 0215 - CORPAPEL"
+            android:text="Tienda - CORPAPEL"
             android:textColor="@android:color/background_light" />
 
     </RelativeLayout>

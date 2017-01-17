@@ -31,6 +31,7 @@ public class Usuario extends RealmObject {
     private String imagen;
     private String password;
     private String id_facebook;
+    private String id_google;
     private boolean sesion;
 
     public static void crearSesion(Usuario usuario) {
@@ -50,6 +51,7 @@ public class Usuario extends RealmObject {
             usuario2.setImagen(usuario.getImagen());
             usuario2.setPassword(usuario.getPassword());
             usuario2.setId_facebook(usuario.getId_facebook());
+            usuario2.setId_google(usuario.getId_google());
             usuario2.setSesion(true);
             realm.copyToRealm(usuario2);
             Log.d(TAG, usuario2.toString());
@@ -65,6 +67,7 @@ public class Usuario extends RealmObject {
             usuario1.setImagen(usuario.getImagen());
             usuario1.setPassword(usuario.getPassword());
             usuario1.setId_facebook(usuario.getId_facebook());
+            usuario1.setId_google(usuario.getId_google());
             usuario1.setSesion(true);
             Log.d(TAG, usuario1.toString());
         }
@@ -87,6 +90,7 @@ public class Usuario extends RealmObject {
         usuario.setImagen("");
         usuario.setPassword("");
         usuario.setId_facebook("");
+        usuario.setId_google("");
         usuario.setSesion(false);
         //modificacion AMD
         realm.commitTransaction();
@@ -200,5 +204,13 @@ public class Usuario extends RealmObject {
 
     public void setId_facebook(String id_facebook) {
         this.id_facebook = id_facebook;
+    }
+
+    public String getId_google() {
+        return id_google;
+    }
+
+    public void setId_google(String id_google) {
+        this.id_google = id_google;
     }
 }

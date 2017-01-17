@@ -25,6 +25,7 @@ public class Tienda extends RealmObject {
     private String direccion;
     private String horario_inicio;
     private String horario_fin;
+    private String telefono;
     private double longitud;
     private double latitud;
 
@@ -100,5 +101,13 @@ public class Tienda extends RealmObject {
 
     public void setLatitud(double latitud) {
         this.latitud = latitud;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

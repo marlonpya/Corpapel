@@ -1,23 +1,25 @@
 package com.littletemplate.corpapel.fragment;
 
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,20 +29,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
-import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
-import com.google.android.gms.location.LocationRequest;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.vision.text.Line;
-import com.google.android.gms.vision.text.Text;
 import com.littletemplate.corpapel.ProductActivity;
 import com.littletemplate.corpapel.R;
 import com.littletemplate.corpapel.app.Configuracion;
@@ -74,19 +72,24 @@ public class MapaFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_mapa, container, false);
         ButterKnife.bind(this, view);
 
+        // Assume thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
         progressDialog.setMessage(getString(R.string.actualizando));
         locManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         myLocationListener = new MyLocationListener();
-        comenzarLocacion();
+        vaciarTiendaRealm();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_fragment);
+
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 mGoogleMap = googleMap;
-
                 if (ConexionBroadcastReceiver.isConect()) requestTienda();
                 mGoogleMap.setMyLocationEnabled(true);
 
@@ -108,19 +111,55 @@ public class MapaFragment extends Fragment {
                         TextView tvDireccion = (TextView)view.findViewById(R.id.txt_direccion);
                         TextView tvHorario = (TextView)view.findViewById(R.id.txt_horario);
                         TextView tvDistancia = (TextView)view.findViewById(R.id.txt_distancia);
+                        TextView tvTelefono = (TextView)view.findViewById(R.id.txt_telefono);
                         LinearLayout btnCatalogo = (LinearLayout)view.findViewById(R.id.btnCatalogo);
+                        LinearLayout btnCompartir = (LinearLayout)view.findViewById(R.id.btnCompartir);
+                        LinearLayout btnWaze = (LinearLayout)view.findViewById(R.id.btnWaze);
                         tvNombre.setText(tienda.getNombre());
                         tvDireccion.setText(tienda.getDireccion());
+                        tvTelefono.setText(tienda.getTelefono());
                         tvHorario.setText("HORARIO DE ATENCIÓN: " + tienda.getHorario_inicio() + " a " + tienda.getHorario_fin());
                         tvDistancia.setText(String.format(Locale.US,"%.2f", distanciaKm) + " km");
-
                         dialog.create();
                         dialog.show();
+
+                        btnWaze.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                try
+                                {
+                                    String url = "waze://?ll="+tienda.getLatitud()+","+tienda.getLongitud()+"&navigate=yes";
+                                    Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( url ) );
+                                    startActivity( intent );
+                                }
+                                catch ( ActivityNotFoundException ex  )
+                                {
+                                    Intent intent =
+                                            new Intent( Intent.ACTION_VIEW, Uri.parse( "market://details?id=com.waze" ) );
+                                    startActivity(intent);
+                                }
+                            }
+                        });
 
                         btnCatalogo.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                //startActivity(new Intent(getActivity().getApplicationContext(), ProductActivity.class).putExtra(Constante.ID_TIENDA, tienda.getIdServer()));
+                                startActivity(new Intent(getActivity().getApplicationContext(), ProductActivity.class).putExtra(Constante.ID_TIENDA, tienda.getIdServer()));
+                            }
+                        });
+
+                        btnCompartir.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String texto = tienda.getNombre() + " - " +
+                                        tienda.getDireccion() + " - " +
+                                        "Horario de Atención: " + tienda.getHorario_inicio() +" a "+tienda.getHorario_fin();
+                                ShareLinkContent content = new ShareLinkContent.Builder()
+                                        .setContentTitle("Corpapel")
+                                        .setContentUrl(Uri.parse("https://www.facebook.com/Corpapelsac/"))
+                                        .setContentDescription(texto)
+                                        .build();
+                                ShareDialog.show(getActivity(), content);
                             }
                         });
                         return false;
@@ -145,15 +184,25 @@ public class MapaFragment extends Fragment {
     private void agregarMakers() {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Tienda> tienda = realm.where(Tienda.class).findAll();
-
+        int n=0;
         for (int i = 0; i < tienda.size(); i++) {
+            n++;
             LatLng latLngTda = new LatLng(tienda.get(i).getLatitud(), tienda.get(i).getLongitud());
-
             mGoogleMap.addMarker(new MarkerOptions()
                     .position(latLngTda)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.gpsicon))
                     .title(tienda.get(i).getNombre())).setTag(tienda.get(i));
 
         }
+        Toast.makeText(getActivity(), n+"", Toast.LENGTH_SHORT).show();
+    }
+
+    private void vaciarTiendaRealm() {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Tienda> tienda_lista = realm.where(Tienda.class).findAll();
+        realm.beginTransaction();
+        tienda_lista.deleteAllFromRealm();
+        realm.commitTransaction();
     }
 
     private void fijarMapa() {
@@ -182,6 +231,7 @@ public class MapaFragment extends Fragment {
                                 tienda.setIdServer(jArray.getJSONObject(i).getInt("TIE_ID"));
                                 tienda.setNombre(jArray.getJSONObject(i).getString("TIE_NOMBRE"));
                                 tienda.setDireccion(jArray.getJSONObject(i).getString("TIE_DIRECCION"));
+                                tienda.setTelefono(jArray.getJSONObject(i).getString("TIE_TELEFONO"));
                                 tienda.setHorario_inicio(jArray.getJSONObject(i).getString("TIE_HORARIO_INICIO"));
                                 tienda.setHorario_fin(jArray.getJSONObject(i).getString("TIE_HORARIO_FIN"));
                                 tienda.setLatitud(Double.parseDouble(jArray.getJSONObject(i).getString("TIE_LATITUD")));
@@ -217,7 +267,7 @@ public class MapaFragment extends Fragment {
             progressDialog.show();
             ubicacionActual.setLatitude(location.getLatitude());
             ubicacionActual.setLongitude(location.getLongitude());
-            if (fijarMapa!=false)
+            if (fijarMapa)
             {
                 fijarMapa();
             }
@@ -252,5 +302,10 @@ public class MapaFragment extends Fragment {
     public void onPause() {
         super.onPause();
         detenerLocacion();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        //super.onSaveInstanceState(outState);
     }
 }
