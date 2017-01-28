@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,8 +20,6 @@ import com.littletemplate.corpapel.model.Producto;
 import com.littletemplate.corpapel.model.Tienda;
 import com.littletemplate.corpapel.util.Util;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
@@ -31,7 +28,7 @@ import io.realm.RealmResults;
 import io.realm.RealmViewHolder;
 
 /**
- * Created by ucweb02 on 10/catalogo_icon/2017.
+ * Created by ucweb02 on 10/01/2017.
  */
 
 public class ProductAdapter extends RealmBasedRecyclerViewAdapter<Producto, ProductAdapter.ViewHolder> {
@@ -44,7 +41,6 @@ public class ProductAdapter extends RealmBasedRecyclerViewAdapter<Producto, Prod
             RealmResults<Producto> realmResults) {
         super(context, realmResults, true, true);
     }
-
 
     public static final String ID_TIENDA = "idServer";
 
@@ -78,18 +74,18 @@ public class ProductAdapter extends RealmBasedRecyclerViewAdapter<Producto, Prod
                 dialog.setView(vw);
                 TextView txtTienda = (TextView)vw.findViewById(R.id.txtTienda);
                 TextView txtTelefono = (TextView)vw.findViewById(R.id.txtTelefono);
-                //
+
                 Realm realm = Realm.getDefaultInstance();
                 final Tienda tienda;
                 tienda = realm.where(Tienda.class).equalTo(ID_TIENDA, producto.getFkTienda()).findFirst();
                 txtTienda.setText(tienda.getNombre());
                 txtTelefono.setText(tienda.getTelefono());
-                //--
+
                 Button btnLlamar = (Button)vw.findViewById(R.id.btnLlamar);
                 btnLlamar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(Intent.ACTION_CALL);
+                            Intent intent = new Intent(Intent.ACTION_CALL);
                         intent.setData(Uri.parse("tel:"+tienda.getTelefono()));
                         try{
                             getContext().startActivity(intent);
@@ -99,7 +95,6 @@ public class ProductAdapter extends RealmBasedRecyclerViewAdapter<Producto, Prod
                         }
                     }
                 });
-
                 Button btnEnviarEmail = (Button)vw.findViewById(R.id.btnEnviarEmail);
                 btnEnviarEmail.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -109,7 +104,6 @@ public class ProductAdapter extends RealmBasedRecyclerViewAdapter<Producto, Prod
                         getContext().startActivity(intent);
                     }
                 });
-
                 dialog.create();
                 dialog.show();
             }

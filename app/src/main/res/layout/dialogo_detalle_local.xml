@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
-        android:paddingTop="40dp"
+        android:paddingTop="20dp"
         android:weightSum="1">
 
 
@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.2"
-            android:background="@android:color/background_light"
+            android:background="@drawable/efecto_click"
             android:orientation="horizontal"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
@@ -122,7 +122,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.2"
-            android:background="@android:color/background_light"
+            android:background="@drawable/efecto_click"
             android:orientation="horizontal"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
@@ -157,7 +157,8 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
                     android:text="VER CATALOGO DE PRODUCTOS"
-                    android:textSize="12sp" />
+                    android:textSize="10sp"
+                    android:id="@+id/textView" />
 
                 <TextView
                     android:clickable="false"
@@ -194,7 +195,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.2"
-            android:background="@android:color/background_light"
+            android:background="@drawable/efecto_click"
             android:orientation="horizontal"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
@@ -226,7 +227,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
                     android:text="COMPARTIR EN REDES SOCIALES"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
                 <TextView
                     android:clickable="false"
@@ -263,14 +264,16 @@
         android:gravity="bottom">
 
         <Button
+            android:id="@+id/btnIniciarRuta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
-
             android:background="@android:color/holo_orange_light"
-            android:text="Tienda - CORPAPEL"
-            android:textColor="@android:color/background_light" />
+            android:text="IR AHI"
+            android:textColor="@android:color/background_light"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 

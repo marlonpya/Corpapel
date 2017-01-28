@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -49,15 +48,11 @@ public class SugerenciaFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sugerencia, container, false);
         ButterKnife.bind(this, view);
-
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
         progressDialog.setMessage(getString(R.string.cargando));
-
         etNombre.setText(Usuario.getUsuario().getNombres());
         etCorreo.setText(Usuario.getUsuario().getCorreo());
-
-
         return view;
     }
 
@@ -68,9 +63,8 @@ public class SugerenciaFragment extends Fragment {
                 requestSugerencia();
             }
             else {
-                //ConexionBroadcastReceiver.showSnack(layout, getActivity());
+                Toast.makeText(getActivity(), R.string.conexion_error, Toast.LENGTH_SHORT).show();
             }
-
         }
         else
         {
@@ -126,6 +120,4 @@ public class SugerenciaFragment extends Fragment {
                 !TextUtils.isEmpty(etCorreo.getText().toString().trim()) &&
                 !TextUtils.isEmpty(etConsulta.getText().toString().trim()));
     }
-
-
 }

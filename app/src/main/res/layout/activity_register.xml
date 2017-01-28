@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.07"
             android:ems="10"
-            android:gravity="bottom|center_vertical|center"
+            android:gravity="center_vertical|center"
             android:hint="NOMBRES APELLIDOS"
             android:inputType="textPersonName"
             android:textColor="?attr/colorBackgroundFloating"
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.07"
             android:ems="10"
-            android:gravity="bottom|center_vertical|center"
+            android:gravity="center_vertical|center"
             android:hint="PASSWORD"
             android:inputType="textPassword"
             android:textColor="?attr/colorBackgroundFloating"
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.07"
             android:ems="10"
-            android:gravity="bottom|center_vertical|center"
+            android:gravity="center_vertical|center"
             android:hint="NOMBRE DE LA EMPRESA"
             android:inputType="textPersonName"
             android:textColor="?attr/colorBackgroundFloating"
@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.07"
             android:ems="10"
-            android:gravity="bottom|center_vertical|center"
+            android:gravity="center_vertical|center"
             android:hint="DIRECCION"
             android:inputType="textPersonName"
             android:textColor="?attr/colorBackgroundFloating"
@@ -128,23 +128,92 @@
             android:textCursorDrawable="@android:color/background_light"
             android:textSize="12sp" />
 
-        <Spinner
-            android:id="@+id/spinner_departamento_registro"
+        <LinearLayout
+            android:id="@+id/btnDepartamento"
+            android:layout_weight="0.07"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.07" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:clickable="false"
+                android:layout_gravity="center"
+                android:layout_marginLeft="35dp"
+                android:layout_marginStart="35dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/darker_gray"
+                android:enabled="false"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:hint="DEPARTAMENTO"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/etDepartamento"
+                android:layout_weight="1" />
+            <ImageView
+                android:clickable="false"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_collapse_00007"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
+        </LinearLayout>
 
-        <Spinner
-            android:id="@+id/spinner_provincia_registro"
+        <LinearLayout
+            android:id="@+id/btnProvincia"
+            android:clickable="false"
+            android:layout_weight="0.07"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.07" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:clickable="false"
+                android:layout_gravity="center"
+                android:layout_marginLeft="35dp"
+                android:layout_marginStart="35dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/darker_gray"
+                android:enabled="false"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:hint="PROVINCIA"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/etProvincia"
+                android:layout_weight="1" />
+            <ImageView
+                android:layout_gravity="center"
+                android:src="@drawable/ic_collapse_00007"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
+        </LinearLayout>
 
-        <Spinner
-            android:id="@+id/spinner_distrito_registro"
+        <LinearLayout
+            android:id="@+id/btnDistrito"
+            android:layout_weight="0.07"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.07" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:clickable="false"
+                android:layout_gravity="center"
+                android:layout_marginLeft="35dp"
+                android:layout_marginStart="35dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/darker_gray"
+                android:enabled="false"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:hint="DISTRITO"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/etDistrito"
+                android:layout_weight="1" />
+            <ImageView
+                android:clickable="false"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_collapse_00007"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
+        </LinearLayout>
 
         <EditText
             android:id="@+id/etCorreoRegistro"
@@ -152,7 +221,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.07"
             android:ems="10"
-            android:gravity="bottom|center_vertical|center"
+            android:gravity="center_vertical|center"
             android:hint="CORREO ELECTRÓNICO"
             android:inputType="textEmailAddress"
             android:textColor="?attr/colorBackgroundFloating"
@@ -168,7 +237,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.07"
             android:ems="10"
-            android:gravity="bottom|center_vertical|center"
+            android:gravity="center_vertical|center"
             android:hint="TELEFONO MOVIL"
             android:inputType="phone"
             android:textColor="?attr/colorBackgroundFloating"

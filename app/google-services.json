@@ -8,7 +8,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:304479059966:android:4541412fe8a34d50",
         "android_client_info": {
-          "package_name": "com.littletemplate.ucweb.corpapel"
+          "package_name": "com.littletemplate.corpapel"
         }
       },
       "oauth_client": [
@@ -16,7 +16,7 @@
           "client_id": "304479059966-c3t5pfec8fgum2oi7nrc9pamp9ffikc9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.littletemplate.ucweb.corpapel",
+            "package_name": "com.littletemplate.corpapel",
             "certificate_hash": "8BFE4358A99644EE052FF84E37E36A72DC05BCA1"
           }
         },
@@ -27,7 +27,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC5g2R5lo7KPPWDgP2aNFli0rfuWwqDj7A"
+          "current_key": "AIzaSyCCvbjpe53M-ED5C9dO_yK2ShnCRY8Bjfg"
         }
       ],
       "services": {
@@ -66,7 +66,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC5g2R5lo7KPPWDgP2aNFli0rfuWwqDj7A"
+          "current_key": "AIzaSyCCvbjpe53M-ED5C9dO_yK2ShnCRY8Bjfg"
         }
       ],
       "services": {

@@ -28,6 +28,9 @@ public class Tienda extends RealmObject {
     private String telefono;
     private double longitud;
     private double latitud;
+    private int idDepartamento;
+    private int idProvincia;
+    private int idDistrito;
 
     public String getHorario_inicio() {
         return horario_inicio;
@@ -109,5 +112,29 @@ public class Tienda extends RealmObject {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public int getIdDepartamento() {
+        return idDepartamento;
+    }
+
+    public void setIdDepartamento(int idDepartamento) {
+        this.idDepartamento = idDepartamento;
+    }
+
+    public int getIdProvincia() {
+        return idProvincia;
+    }
+
+    public void setIdProvincia(int idProvincia) {
+        this.idProvincia = idProvincia;
+    }
+
+    public int getIdDistrito() {
+        return idDistrito;
+    }
+
+    public void setIdDistrito(int idDistrito) {
+        this.idDistrito = idDistrito;
     }
 }

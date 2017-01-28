@@ -2,9 +2,7 @@ package com.littletemplate.corpapel.fragment;
 
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -15,10 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -30,8 +28,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
-import com.littletemplate.corpapel.PrincipalActivity;
-//import com.littletemplate.corpapel.PrincipalActivity_ViewBinding;
 import com.littletemplate.corpapel.R;
 import com.littletemplate.corpapel.apis.FacebookApi;
 import com.littletemplate.corpapel.app.Configuracion;
@@ -55,6 +51,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
+import butterknife.OnTextChanged;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -65,13 +62,18 @@ public class EditarFragment extends Fragment {
     @BindView(R.id.etPasswordEditar) EditText etPassword;
     @BindView(R.id.etNombresEmpresaEditar) EditText etNombreEmpresa;
     @BindView(R.id.etDireccionEditar) EditText etDireccion;
-    @BindView(R.id.spinner_departamento_Editar) Spinner spDepartamento;
-    @BindView(R.id.spinner_provincia_Editar) Spinner spProvincia;
-    @BindView(R.id.spinner_distrito_Editar) Spinner spDistrito;
+    @BindView(R.id.etDepartamento) TextView etDepartamento;
+    @BindView(R.id.etProvincia) TextView etProvincia;
+    @BindView(R.id.etDistrito) TextView etDistrito;
+    @BindView(R.id.btnDepartamento) LinearLayout btnDepartamento;
+    @BindView(R.id.btnProvincia) LinearLayout btnProvincia;
+    @BindView(R.id.btnDistrito) LinearLayout btnDistrito;
+
     @BindView(R.id.etTelefonoEditar) EditText etTelefono;
     private ProgressDialog progressDialog;
     private TextView etNombreNavegador;
     public EditarFragment() { }
+    private int idDep=-1, idPro=-1, idDis;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,14 +92,15 @@ public class EditarFragment extends Fragment {
             Usuario usuario = Usuario.getUsuario();
             etNombre.setText(usuario.getNombres());
             etNombreEmpresa.setText(usuario.getNombre_empresa());
-            etDireccion.setText(usuario.getDireccion());/*
-            spDepartamento.setPrompt(usuario.getDepartamento());
-            spProvincia.setPrompt(usuario.getProvincia());
-            spDistrito.setPrompt(usuario.getDistrito());*/
+            etDireccion.setText(usuario.getDireccion());
+            etDepartamento.setText(usuario.getDepartamento());
+            etProvincia.setText(usuario.getProvincia());
+            etDistrito.setText(usuario.getDistrito());
+
             etTelefono.setText(usuario.getMovil());
             etPassword.setText(usuario.getPassword());
             if (FacebookApi.conectado() || !TextUtils.isEmpty(usuario.getId_google()) ){
-                etPassword.setVisibility(View.INVISIBLE);
+                etPassword.setVisibility(View.GONE);
             }
         }
 
@@ -112,103 +115,11 @@ public class EditarFragment extends Fragment {
             }
         }
         else{
-            llenarDepartamentos();
-            sesion();
+            //sesion();
         }
         return view;
     }
 
-    private void sesion() {
-        int usDepPos = 0;
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Departamento> departamentos = realm.where(Departamento.class).findAll();
-        for (int i = 0; i < departamentos.size(); i++){
-            if (departamentos.get(i).getNomDepartamento().equals(Usuario.getUsuario().getDepartamento())){
-                usDepPos=i;
-            }
-        }
-        spDepartamento.setSelection(usDepPos);
-    }
-
-    private void llenarDepartamentos(){
-        Departamento departamento = new Departamento();
-        List<String> array = departamento.listarDepartamento();
-        ArrayAdapter spDepartamentoAdapter = new ArrayAdapter(getActivity(),
-                R.layout.spinner_item,array);
-        spDepartamentoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spDepartamento.setAdapter(spDepartamentoAdapter);
-    }
-
-    @OnItemSelected(R.id.spinner_provincia_Editar)
-    public void spinnerProvSelected(Spinner spinner, int pos) {
-        llenarDistrito(spProvincia.getSelectedItem().toString());
-    }
-
-    private void llenarDistrito(String nomProv) {
-        Realm realm = Realm.getDefaultInstance();
-        spDistrito.setAdapter(null);
-        int provId=0;
-        RealmResults<Provincia> provincias = realm.where(Provincia.class).findAll();
-        for (int i = 0; i < provincias.size(); i++) {
-            if (provincias.get(i).getNomProvincia().equals(nomProv)){
-                provId=provincias.get(i).getIdServer();
-            }
-        }
-        RealmResults<Distrito> distritos = realm.where(Distrito.class).findAll();
-        final List<String> nombre_distritos = new ArrayList<>();
-        for (int i = 0; i < distritos.size(); i++){
-            if (distritos.get(i).getFkProvincia()==provId){
-                nombre_distritos.add(distritos.get(i).getNomDistrito());
-            }
-        }
-        ArrayAdapter spDistritoAdapter = new ArrayAdapter(getActivity(),
-                R.layout.spinner_item,nombre_distritos);
-        spDistritoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spDistrito.setAdapter(spDistritoAdapter);
-
-
-        for (int i=0; i < nombre_distritos.size(); i++){
-            if (nombre_distritos.get(i).equals(Usuario.getUsuario().getDistrito())){
-                spDistrito.setSelection(i);
-            }
-        }
-
-    }
-
-    @OnItemSelected(R.id.spinner_departamento_Editar)
-    public void spinnerDepSelected(Spinner spinner, int pos) {
-        llenarProvincias(spDepartamento.getSelectedItem().toString());
-    }
-
-    public void llenarProvincias(String nomDep){
-
-        Realm realm = Realm.getDefaultInstance();
-        spProvincia.setAdapter(null);
-        int depId=0;
-        RealmResults<Departamento> departamentos = realm.where(Departamento.class).findAll();
-        for (int i = 0; i < departamentos.size(); i++) {
-            if (departamentos.get(i).getNomDepartamento().equals(nomDep)){
-                depId=departamentos.get(i).getIdServer();
-            }
-        }
-        RealmResults<Provincia> provincias = realm.where(Provincia.class).findAll();
-        final List<String> nombre_provincias = new ArrayList<>();
-
-        for (int i = 0; i < provincias.size(); i++){
-            if (provincias.get(i).getFkDepartamento()==depId){
-                nombre_provincias.add(provincias.get(i).getNomProvincia());
-            }
-        }
-        ArrayAdapter spProvinciaAdapter = new ArrayAdapter(getActivity(),
-                R.layout.spinner_item,nombre_provincias);
-        spProvinciaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spProvincia.setAdapter(spProvinciaAdapter);
-        for (int i=0; i < nombre_provincias.size(); i++){
-            if (nombre_provincias.get(i).equals(Usuario.getUsuario().getProvincia())){
-                spProvincia.setSelection(i);
-            }
-        }
-    }
     private void requestDistrito() {
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -231,12 +142,8 @@ public class EditarFragment extends Fragment {
                                 realm.commitTransaction();
                             }
                             realm.close();
-                            llenarDepartamentos();
-                            sesion();
-                            //int codigo = jsonObject.getInt("codigo");
                             Log.d(TAG, jsonObject.toString());
                             progressDialog.hide();
-                            //mensajeSistema(codigo);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e(TAG, e.toString(), e);
@@ -252,11 +159,9 @@ public class EditarFragment extends Fragment {
                         progressDialog.hide();
                     }
                 }
-
         );
         Configuracion.getInstancia().addRequestQueue(request, TAG);
     }
-
 
     private void requestProvincia() {
         StringRequest request = new StringRequest(
@@ -280,9 +185,7 @@ public class EditarFragment extends Fragment {
                                 realm.commitTransaction();
                             }
                             realm.close();
-                            //int codigo = jsonObject.getInt("codigo");
                             Log.d(TAG, jsonObject.toString());
-                            //mensajeSistema(codigo);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e(TAG, e.toString(), e);
@@ -296,10 +199,8 @@ public class EditarFragment extends Fragment {
                         VolleyLog.e(error.toString());
                     }
                 }
-
         );
         Configuracion.getInstancia().addRequestQueue(request, TAG);
-
     }
 
     private void requestDepartamento() {
@@ -315,7 +216,6 @@ public class EditarFragment extends Fragment {
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray jArray = jsonObject.getJSONArray("departamento");
                             Realm realm = Realm.getDefaultInstance();
-                            Log.v("AMD", "reqDep");
                             for (int i = 0; i < jArray.length(); i++) {
                                 realm.beginTransaction();
                                 Departamento departamento = realm.createObject(Departamento.class, Departamento.getUltimoId());
@@ -325,9 +225,7 @@ public class EditarFragment extends Fragment {
                                 realm.commitTransaction();
                             }
                             realm.close();
-                            //int codigo = jsonObject.getInt("codigo");
                             Log.d(TAG, jsonObject.toString());
-                            //mensajeSistema(codigo);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e(TAG, e.toString(), e);
@@ -407,9 +305,9 @@ public class EditarFragment extends Fragment {
                 params.put("nombre_apellidos", etNombre.getText().toString().trim());
                 params.put("nombre_empresa", etNombreEmpresa.getText().toString().trim());
                 params.put("direccion", etDireccion.getText().toString().trim());
-                params.put("departamento", spDepartamento.getSelectedItem().toString().trim());
-                params.put("provincia", spProvincia.getSelectedItem().toString().trim());
-                params.put("distrito", spDistrito.getSelectedItem().toString().trim());
+                params.put("departamento", etDepartamento.getText().toString().trim());
+                params.put("provincia", etProvincia.getText().toString().trim());
+                params.put("distrito", etDistrito.getText().toString().trim());
                 Usuario usuario = Usuario.getUsuario();
                 params.put("correo", usuario.getCorreo());
                 params.put("telefono", etTelefono.getText().toString().trim());
@@ -457,9 +355,9 @@ public class EditarFragment extends Fragment {
                 params.put("nombre_apellidos", etNombre.getText().toString().trim());
                 params.put("nombre_empresa", etNombreEmpresa.getText().toString().trim());
                 params.put("direccion", etDireccion.getText().toString().trim());
-                params.put("departamento", spDepartamento.getSelectedItem().toString().trim());
-                params.put("provincia", spProvincia.getSelectedItem().toString().trim());
-                params.put("distrito", spDistrito.getSelectedItem().toString().trim());
+                params.put("departamento", etDepartamento.getText().toString().trim());
+                params.put("provincia", etProvincia.getText().toString().trim());
+                params.put("distrito", etDistrito.getText().toString().trim());
                 Usuario usuario = Usuario.getUsuario();
                 params.put("id_fb", usuario.getId_facebook());
                 params.put("telefono", etTelefono.getText().toString().trim());
@@ -506,9 +404,9 @@ public class EditarFragment extends Fragment {
                 params.put("nombre_apellidos", etNombre.getText().toString().trim());
                 params.put("nombre_empresa", etNombreEmpresa.getText().toString().trim());
                 params.put("direccion", etDireccion.getText().toString().trim());
-                params.put("departamento", spDepartamento.getSelectedItem().toString().trim());
-                params.put("provincia", spProvincia.getSelectedItem().toString().trim());
-                params.put("distrito", spDistrito.getSelectedItem().toString().trim());
+                params.put("departamento", etDepartamento.getText().toString().trim());
+                params.put("provincia", etProvincia.getText().toString().trim());
+                params.put("distrito", etDistrito.getText().toString().trim());
                 Usuario usuario = Usuario.getUsuario();
                 params.put("id_google", usuario.getId_google());
                 params.put("correo", usuario.getCorreo());
@@ -561,7 +459,7 @@ public class EditarFragment extends Fragment {
                 actualizarHeader(Usuario.getUsuario().getNombres());
             }
         };
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(getContext())
                 .setTitle(R.string.app_name)
                 .setMessage(texto)
                 .setCancelable(false)
@@ -576,9 +474,9 @@ public class EditarFragment extends Fragment {
         usuario.setNombres(etNombre.getText().toString().trim());
         usuario.setNombre_empresa(etNombreEmpresa.getText().toString().trim());
         usuario.setDireccion(etDireccion.getText().toString().trim());
-        usuario.setDepartamento(spDepartamento.getSelectedItem().toString().trim());
-        usuario.setProvincia(spProvincia.getSelectedItem().toString().trim());
-        usuario.setDistrito(spDistrito.getSelectedItem().toString().trim());
+        usuario.setDepartamento(etDepartamento.getText().toString().trim());
+        usuario.setProvincia(etProvincia.getText().toString().trim());
+        usuario.setDistrito(etDistrito.getText().toString().trim());
         usuario.setMovil(etTelefono.getText().toString().trim());
         realm.commitTransaction();
         realm.close();
@@ -587,11 +485,98 @@ public class EditarFragment extends Fragment {
     private boolean validarDatos() {
         return  (!TextUtils.isEmpty(etNombre.getText().toString().trim()) &&
                 !TextUtils.isEmpty(etNombreEmpresa.getText().toString().trim()) &&
-                !TextUtils.isEmpty(etDireccion.getText().toString().trim()) &&/*
-                !TextUtils.isEmpty(spDepartamento.getPrompt()) &&
-                !TextUtils.isEmpty(spDistrito.getPrompt()) &&
-                !TextUtils.isEmpty(spProvincia.getPrompt()) &&*/
+                !TextUtils.isEmpty(etDireccion.getText().toString().trim()) &&
+                !TextUtils.isEmpty(etDepartamento.getText().toString().trim()) &&
+                !TextUtils.isEmpty(etDistrito.getText().toString().trim()) &&
+                !TextUtils.isEmpty(etProvincia.getText().toString().trim()) &&
                 !TextUtils.isEmpty(etTelefono.getText()));
     }
+
+    @OnClick(R.id.btnDepartamento)
+    public void dialogoDepartamentos(){
+        List<String> items = new ArrayList<>();
+        Realm realm = Realm.getDefaultInstance();
+        final RealmResults<Departamento> departamentos = realm.where(Departamento.class).findAll();
+        for (int i = 0; i < departamentos.size(); i++){
+            items.add(departamentos.get(i).getNomDepartamento());
+        }
+        new AlertDialog.Builder(getActivity())
+                .setTitle(getString(R.string.seleccione_departamento).toUpperCase())
+                .setSingleChoiceItems(items.toArray(new String[items.size()]), -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        idDep = departamentos.get(which).getIdServer();
+                        etDepartamento.setText(departamentos.get(which).getNomDepartamento());
+                    }
+                })
+                .show();
+    }
+
+    @OnClick(R.id.btnProvincia)
+    public void dialogoProvincia(){
+        if (!TextUtils.isEmpty(etDepartamento.getText().toString().trim())) {
+            Realm realm = Realm.getDefaultInstance();
+            final Departamento departamento = realm.where(Departamento.class).equalTo("nomDepartamento", etDepartamento.getText().toString().trim()).findFirst();
+            idDep=departamento.getIdServer();
+            if (idDep!=-1) {
+                List<String> items = new ArrayList<>();
+                final RealmResults<Provincia> provincias = realm.where(Provincia.class).equalTo("fkDepartamento", idDep).findAll();
+                for (int i = 0; i < provincias.size(); i++) {
+                    items.add(provincias.get(i).getNomProvincia());
+                }
+                new AlertDialog.Builder(getContext())
+                        .setTitle(getString(R.string.seleccione_provincia).toUpperCase())
+                        .setSingleChoiceItems(items.toArray(new String[items.size()]), -1, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                idPro = provincias.get(which).getIdServer();
+                                etProvincia.setText(provincias.get(which).getNomProvincia());
+                            }
+                        })
+                        .show();
+            }
+        }
+    }
+
+    @OnClick(R.id.btnDistrito)
+    public void dialogoDistrito(){
+        if (!TextUtils.isEmpty(etProvincia.getText().toString().trim())) {
+            Realm realm = Realm.getDefaultInstance();
+            final Provincia provincia = realm.where(Provincia.class).equalTo("nomProvincia", etProvincia.getText().toString().trim()).findFirst();
+            idPro = provincia.getIdServer();
+            if (idPro != -1) {
+                List<String> items = new ArrayList<>();
+                final RealmResults<Distrito> distritos = realm.where(Distrito.class).equalTo("fkProvincia", idPro).findAll();
+                for (int i = 0; i < distritos.size(); i++) {
+                    items.add(distritos.get(i).getNomDistrito());
+                }
+                new AlertDialog.Builder(getContext())
+                        .setTitle(getString(R.string.seleccione_distrito).toUpperCase())
+                        .setSingleChoiceItems(items.toArray(new String[items.size()]), -1, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                idDis = distritos.get(which).getIdServer();
+                                etDistrito.setText(distritos.get(which).getNomDistrito());
+                            }
+                        })
+                        .show();
+            }
+        }
+    }
+
+    @OnTextChanged(R.id.etDepartamento)
+    void onDepartamentoTextChange() {
+        etProvincia.setText("");
+        idPro=-1;
+    }
+
+    @OnTextChanged(R.id.etProvincia)
+    void onProvinciaTextChange() {
+        etDistrito.setText("");
+    }
+
 
 }

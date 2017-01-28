@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.littletemplate.corpapel">
+    package="com.littletemplate.corpapel"
+    android:versionCode="2"
+    android:versionName="1.1.a">
+
+    <uses-sdk
+        android:maxSdkVersion="25"
+        android:minSdkVersion="15"
+        android:targetSdkVersion="25" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".app.Configuracion"
@@ -14,7 +24,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".IniciarSesionActivity"
+        <activity
+            android:name=".IniciarSesionActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +33,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegistroActivity"
+        <activity
+            android:name=".RegistroActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".PrincipalActivity"
@@ -35,10 +47,17 @@
             android:value="@string/facebook_app_id" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC5g2R5lo7KPPWDgP2aNFli0rfuWwqDj7A" />
+            android:value="AIzaSyCCvbjpe53M-ED5C9dO_yK2ShnCRY8Bjfg" />
 
-        <activity android:name=".ProductActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ProductActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FiltroActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListaTiendasActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

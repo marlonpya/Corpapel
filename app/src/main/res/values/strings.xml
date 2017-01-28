@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Corpapel</string>
+    <string name="pagina_fb">https://www.facebook.com/Corpapelsac/</string>
     <string name="facebook_app_id">1780148508901827</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Corpapel</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -13,8 +14,11 @@
     <string name="internet_error">Lo sentimos, usted no tiene conexión a internet.</string>
     <string name="ingresar_todos_datos">Se requiere de todos los datos</string>
     <string name="buscar_tienda">Buscar Tienda</string>
+    <string name="seleccione_departamento">Seleccione Departamento</string>
+    <string name="seleccione_provincia">Seleccione Provincia</string>
+    <string name="seleccione_distrito">Seleccione Distrito</string>
     <string name="x_ubicacion_gps">Por Ubicación (GPS)</string>
-    <string name="x_tipo">Por Tipo de Servicio</string>
+    <string name="x_distrito">Por Distrito</string>
     <string name="registro_ok">Usuario registrado satisfactoriamente</string>
     <string name="aceptar">Aceptar</string>
     <string name="registro_error">Ocurrió un error al momento de registrar usuario</string>
@@ -31,7 +35,7 @@
     <string name="sugerencia">Sugerencia</string>
     <string name="consulta">Consulta</string>
     <string name="sugerencia_enviada">Sugerencia Enviada</string>
-    <string name="no_productos">No se encontraron resultados..</string>
+    <string name="no_resultados">No se encontraron resultados..</string>
     <string name="oops">Oops</string>
 
 </resources>

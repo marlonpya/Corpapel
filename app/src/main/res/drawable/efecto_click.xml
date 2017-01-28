@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/efecto_blanco" android:state_pressed="false" />
+    <item android:state_pressed="true">
+        <layer-list>
+            <item android:drawable="@drawable/efecto_opaco" />
+            <item>
+                <shape android:gravity="center" android:shape="rectangle" />
+            </item>
+        </layer-list>
+    </item>
+</selector>

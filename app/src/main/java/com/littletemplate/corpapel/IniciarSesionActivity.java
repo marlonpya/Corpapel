@@ -192,6 +192,7 @@ public class IniciarSesionActivity extends BaseActivity implements GoogleApiClie
 
     @OnClick(R.id.btnIngresarFB)
     public void iniciarSesionFACEBOOK() {
+
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -212,6 +213,8 @@ public class IniciarSesionActivity extends BaseActivity implements GoogleApiClie
             @Override
             public void onError(FacebookException error) { Log.e(TAG, error.toString(), error);}
         });
+
+
     }
 
     private void obteneDatosFB(JSONObject object) {
@@ -399,8 +402,12 @@ public class IniciarSesionActivity extends BaseActivity implements GoogleApiClie
 
     @OnClick(R.id.sign_in_button)
     public void iniciarSesionGOOGLE() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        if (ConexionBroadcastReceiver.isConect()){
+            Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+            startActivityForResult(signInIntent, RC_SIGN_IN);
+        }else {
+            Toast.makeText(this, R.string.conexion_error, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

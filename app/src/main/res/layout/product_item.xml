@@ -8,6 +8,8 @@
 
     <LinearLayout
         android:id="@+id/btnSeleccionar"
+        android:clickable="true"
+        android:background="@drawable/efecto_click"
         android:paddingTop="25dp"
         android:paddingBottom="25dp"
         android:layout_width="match_parent"
